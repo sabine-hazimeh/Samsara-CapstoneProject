@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Post Form</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="stylesheet"  th:href="@{/css/style.css}" />
+    <link rel="stylesheet"  th:href="@{/css/site.css}" />
+    <link rel="stylesheet" th:href="@{/css/helper.css}" />
+    <link rel="stylesheet" th:href="@{/css/plugins.css}" />
+    <link rel="stylesheet" th:href="@{/css/app.min.css}" />
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+    <link rel="stylesheet" th:href="@{/css/custom.min.css}" />
+    <link rel="stylesheet" th:href="@{/fonts/FontAwesome.otf}" />
+</head>
+<body>
+<div th:replace="fragment/header :: header"></div>
+<div class="row">
+    <div class="col-md-12 mb-60 mb-xs-30">
+        <div class="section-title center">
+            <h1>Apartment Details</h1>
+        </div>
+    </div>
+</div>
+
+<div class="section-title center">
+    <h1>Please fill the below form:</h1>
+</div>
+
+<div class="container">
+    <form th:action="@{/post/add-post-to-list}" method="post" th:object="${Post}" enctype="multipart/form-data">
+        <input type="hidden" th:field="*{id}">
+        <input type="hidden" th:field="*{version}">
+        <!--picture-->
+        <div class="mb-3">
+            <label for="files" class="form-label">Upload Pictures</label>
+            <input type="file" class="form-control" id="files" name="files" multiple="multiple" accept="image/*">
+        </div>
+        <!-- Location -->
+        <div class="mb-3">
+            <label for="location" class="form-label">Location</label>
+            <input type="text" class="form-control" id="location" th:field="*{location}">
+        </div>
+
+        <!-- City -->
+        <div class="mb-3">
+            <label for="city" class="form-label">City</label>
+            <input type="text" class="form-control" id="city" th:field="*{city}">
+        </div>
+
+        <!-- Bedrooms -->
+        <div class="mb-3">
+            <label for="bedroom" class="form-label">Bedrooms</label>
+            <input type="number" class="form-control" id="bedroom" th:field="*{bedroomNb}">
+        </div>
+
+        <!-- Bathrooms -->
+        <div class="mb-3">
+            <label for="bathroom" class="form-label">Bathrooms</label>
+            <input type="number" class="form-control" id="bathroom" th:field="*{bathroomNb}">
+        </div>
+
+        <!-- Area -->
+        <div class="mb-3">
+            <label for="area" class="form-label">Area</label>
+            <input type="text" class="form-control" id="area" th:field="*{area}">
+        </div>
+
+        <!-- Floor -->
+        <div class="mb-3">
+            <label for="floor" class="form-label">Floor</label>
+            <input type="number" class="form-control" id="floor" th:field="*{floor}">
+        </div>
+
+        <!-- Building Floor Nb -->
+        <div class="mb-3">
+            <label for="Buildingfloor" class="form-label">Building Floor Number</label>
+            <input type="number" class="form-control" id="Buildingfloor" th:field="*{buildingFloorNb}">
+        </div>
+
+        <!-- Price -->
+        <div class="mb-3">
+            <label for="price" class="form-label">Price</label>
+            <input type="number" class="form-control" id="price" th:field="*{price}">
+        </div>
+
+        <!-- Status -->
+        <div class="mb-3">
+            <label for="Status" class="form-label">Status</label>
+            <select class="form-control" id="Status" th:field="*{status}">
+                <option th:each="status : ${T(com.Samsara.Capstone.Project.enums.PostStatus).values()}"
+                        th:value="${status}"
+                        th:text="${status}"></option>
+            </select>
+        </div>
+
+        <!-- Description -->
+        <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <textarea class="form-control" id="description" th:field="*{description}" rows="5" cols="80"></textarea>
+        </div>
+
+        <!-- Water Type -->
+        <div class="mb-3">
+            <label for="waterType" class="form-label">Water Type</label>
+            <select class="form-control" id="waterType" th:field="*{waterType}">
+                <option th:each="waterType : ${T(com.Samsara.Capstone.Project.enums.WaterType).values()}"
+                        th:value="${waterType}"
+                        th:text="${waterType}"></option>
+            </select>
+        </div>
+
+        <!-- Longitude -->
+        <div class="mb-3">
+            <label for="longitude" class="form-label">Longitude</label>
+            <input type="number" class="form-control" id="longitude" th:field="*{longitude}">
+        </div>
+
+        <!-- Altitude -->
+        <div class="mb-3">
+            <label for="altitude" class="form-label">Altitude</label>
+            <input type="number" class="form-control" id="altitude" th:field="*{altitude}">
+        </div>
+
+        <!-- Submit Button -->
+        <div class="mb-3">
+            <button type="submit" class="btn btn-primary mb-3">Create Post</button>
+        </div>
+    </form>
+</div>
+
+<div th:replace="fragment/footer :: footer"></div>
+</body>
+</html>

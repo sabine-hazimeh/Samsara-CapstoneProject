@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Seller Details</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+        <link rel="stylesheet"  th:href="@{/css/style.css}" />
+        <link rel="stylesheet"  th:href="@{/css/site.css}" />
+        <link rel="stylesheet" th:href="@{/css/helper.css}" />
+        <link rel="stylesheet" th:href="@{/css/plugins.css}" />
+        <link rel="stylesheet" th:href="@{/css/app.min.css}" />
+        <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+        <link rel="stylesheet" th:href="@{/css/custom.min.css}" />
+        <link rel="stylesheet" th:href="@{/fonts/FontAwesome.otf}" />
+</head>
+<body>
+<div th:replace="fragment/header :: header"></div>
+<div class="container seller-details-container">
+    <div class="seller-details">
+        <div class="profile-photo">
+            <img th:src="@{Client.profilePhoto}" alt="Profile Photo">
+        </div>
+        <div class="contact-details">
+            <p>User Name: <span th:text="${Client.userName}"></span></p>
+            <p>Phone Number: <span th:text="${Client.phoneNumber}"></span></p>
+            <p>Email: <span th:text="${Client.email}"></span></p>
+        </div>
+    </div>
+</div>
+<div th:replace="fragment/footer :: footer"></div>
+</body>
+</html>

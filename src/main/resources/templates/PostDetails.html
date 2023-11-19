@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Property Details</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="stylesheet"  th:href="@{/css/style.css}" />
+    <link rel="stylesheet"  th:href="@{/css/site.css}" />
+    <link rel="stylesheet" th:href="@{/css/helper.css}" />
+    <link rel="stylesheet" th:href="@{/css/plugins.css}" />
+    <link rel="stylesheet" th:href="@{/css/app.min.css}" />
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+    <link rel="stylesheet" th:href="@{/css/custom.min.css}" />
+    <link rel="stylesheet" th:href="@{/fonts/FontAwesome.otf}" />
+    <style>
+        a.btn.pastel-button:hover {
+            background-color: #e8bc52;
+            color: #405189;
+            border-color: #e8bc52;
+        }
+        /* Your existing styles */
+        /* ... */
+        .rating {
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: center;
+        }
+        .rating input {
+            display: none;
+        }
+        .rating label {
+            cursor: pointer;
+            width: 30px;
+            font-size: 24px;
+            color: #FFD700;
+        }
+        .rating label::before {
+            content: '\2605';
+        }
+        .rating input:checked ~ label {
+            color: #FFD700;
+        }
+
+    </style>
+</head>
+<body>
+<div class="property-details">
+    <div class="image-slider">
+        <div th:each="picture : ${post.pictures}">
+            <img th:src="${picture}" alt="">
+        </div>
+    </div>
+    <div class="details">
+        <p class="price" th:text="${post.price} + ' $'"></p>
+        <p class="city" th:text="${post.city}"></p>
+        <p class="location" th:text="${post.location}"></p>
+        <p class="area" th:text="${post.area + ' sqft'}"></p>
+        <p class="floor" th:text="${post.floor}"></p>
+        <p class="building-floors" th:text="${post.buildingFloorNb}"></p>
+        <p class="water-type" th:text="${post.waterType}"></p>
+        <p class="status" th:text="${post.status}"></p>
+        <p class="description" th:text="${post.description}"></p>
+        <p class="bathrooms" th:text="${post.bathroomNb}"></p>
+        <p class="bedrooms" th:text="${post.bedroomNb}"></p>
+        <div class="row">
+            <div class="col-md-3">
+                <a th:href="@{/post/display-client-details/{postId}(postId=${post.id})}" class="btn pastel-button mb-3 pb-2 pt-2" style="background-color: #405189; color: #e8bc52; border-color: #405189" method="get">
+                    View Seller Details
+                </a>
+            </div>
+        </div>
+
+    </div>
+    <form th:action="@{'/post/add-review/' + ${post.id}}" method="post" th:object="${review}">
+        <div class="RateContainer">
+            <div class="star-widget">
+                <input type="radio" name="rate" th:field="*{rate}" id="rate-5" value="5">
+                <label for="rate-5" class="fas fa-star"></label>
+                <input type="radio" name="rate" id="rate-4" th:field="*{rate}" value="4">
+                <label for="rate-4" class="fas fa-star"></label>
+                <input type="radio" name="rate" id="rate-3" th:field="*{rate}" value="3">
+                <label for="rate-3" class="fas fa-star"></label>
+                <input type="radio" name="rate" id="rate-2" th:field="*{rate}" value="2">
+                <label for="rate-2" class="fas fa-star"></label>
+                <input type="radio" name="rate" id="rate-1" th:field="*{rate}" value="1">
+                <label for="rate-1" class="fas fa-star"></label>
+            </div>
+            <div class="textarea">
+                <label for="description">Describe your experience:</label><br>
+                <textarea cols="30" th:field="*{description}" id="description" placeholder="Describe your experience.." required></textarea><br><br>
+            </div>
+            <div class="btn">
+                <button type="submit">Post</button>
+            </div>
+        </div>
+    </form>
+    <div class="existing-reviews">
+        <h2>Existing Reviews</h2>
+        <div th:if="${post.reviews != null}">
+            <div th:each="review : ${post.reviews}">
+                <div class="review">
+                    <p>Rating: <span th:text="${review.rate}"></span></p>
+                    <p>Description: <span th:text="${review.description}"></span></p>
+                    <!-- Add other review details as needed -->
+                </div>
+            </div>
+        </div>
+        <div th:if="${post.reviews == null or #lists.isEmpty(post.reviews)}">
+            <p>No reviews available for this post.</p>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

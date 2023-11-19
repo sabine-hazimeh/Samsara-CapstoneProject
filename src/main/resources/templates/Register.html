@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <link rel="stylesheet" th:href="@{/css/site.css}" />
+    <link rel="stylesheet" th:href="@{/css/helper.css}" />
+    <link rel="stylesheet" th:href="@{/css/plugins.css}" />
+    <link rel="stylesheet" th:href="@{/css/app.min.css}" />
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+    <link rel="stylesheet" th:href="@{/css/custom.min.css}" />
+    <link rel="stylesheet" th:href="@{/fonts/FontAwesome.otf}" />
+</head>
+<body>
+<div th:replace="fragment/header :: header"></div>
+<div class="row">
+    <div class="col-md-12 mb-60 mb-xs-30">
+        <div class="section-title center">
+            <h1>Please Fill This Form</h1>
+        </div>
+    </div>
+</div>
+
+<form class="m-5 text-center w-50 mx-auto border rounded p-4 border-dark" th:action="@{/Register/create}" method="post" th:object="${Client}" enctype="multipart/form-data">
+    <div class="mb-3">
+        <label for="UserName" class="form-label font-weight-bold h5">UserName</label>
+        <input type="text" class="form-control small-input" id="UserName" th:field="*{userName}" required>
+    </div>
+    <div class="mb-3">
+        <label for="PhoneNumber" class="form-label font-weight-bold h5">Phone Number</label>
+        <input type="text" class="form-control small-input" id="PhoneNumber" th:field="*{phoneNumber}" required>
+    </div>
+    <div class="mb-3">
+        <label for="Email" class="form-label font-weight-bold h5">Email</label>
+        <input type="email" class="form-control small-input" id="Email" th:field="*{email}" required>
+    </div>
+    <div class="mb-3">
+        <label for="password" class="form-label font-weight-bold h5">Password</label>
+        <input type="password" class="form-control small-input" id="password" th:field="*{password}" required>
+    </div>
+    <div id="password-strength-message" class="text-muted mb-2"></div>
+    <div class="mb-3">
+        <label for="confirmPassword" class="form-label font-weight-bold h5">Confirm Password</label>
+        <input type="password" class="form-control small-input" id="confirmPassword" required>
+    </div>
+    <div id="password-match-message" class="text-muted mb-2"></div>
+    <div class="mb-3">
+        <label for="files" class="form-label">Profile Picture</label>
+        <input type="file" class="form-control" id="files" name="files"  accept="image/*">
+    </div>
+    <button type="submit" class="btn btn-primary" id="submitBtn" disabled>Create Account</button>
+    <p class="text-center mt-3">
+        Already have an account? <a href="/logIn/display-logIn">LogIn</a>
+    </p>
+</form>
+
+<div th:replace="fragment/footer :: footer"></div>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var passwordInput = document.getElementById("password");
+        var confirmPasswordInput = document.getElementById("confirmPassword");
+        var strengthMessage = document.getElementById("password-strength-message");
+        var matchMessage = document.getElementById("password-match-message");
+        var submitButton = document.getElementById("submitBtn");
+
+        // Event listener for password input
+        passwordInput.addEventListener("input", function () {
+            var password = passwordInput.value;
+            var criteriaMet = checkPasswordCriteria(password);
+
+            // Update the strength message based on the criteria
+            strengthMessage.innerHTML = generateStrengthMessage(criteriaMet);
+
+            // Check if passwords match and display match message
+            checkPasswordMatch(password, confirmPasswordInput.value);
+
+            // Enable or disable the submit button based on the criteria and password match
+            updateSubmitButton(criteriaMet, password, confirmPasswordInput.value);
+        });
+
+        // Event listener for confirm password input
+        confirmPasswordInput.addEventListener("input", function () {
+            // Check if passwords match and display match message
+            checkPasswordMatch(passwordInput.value, confirmPasswordInput.value);
+
+            // Enable or disable the submit button based on the criteria and password match
+            updateSubmitButton(checkPasswordCriteria(passwordInput.value), passwordInput.value, confirmPasswordInput.value);
+        });
+
+        function checkPasswordCriteria(password) {
+            // Check the criteria and return an object indicating which criteria are met
+            var criteria = {
+                lowercase: /[a-z]/.test(password),
+                uppercase: /[A-Z]/.test(password),
+                digit: /\d/.test(password),
+                specialChar: /[!@#$%^&*(),.?":{}|<>]/.test(password),
+                minLength: password.length >= 8,
+            };
+
+            return criteria;
+        }
+
+        function generateStrengthMessage(criteriaMet) {
+            // Generate HTML for the strength message based on the criteria met
+            var message = "<ul>";
+
+            if (criteriaMet.lowercase) {
+                message += "<li class='text-success'>Password should contain at least one small letter</li>";
+            } else {
+                message += "<li class='text-danger'>Password should contain at least one small letter</li>";
+            }
+
+            if (criteriaMet.uppercase) {
+                message += "<li class='text-success'>Password should contain at least one capital letter</li>";
+            } else {
+                message += "<li class='text-danger'>Password should contain at least one capital letter</li>";
+            }
+
+            if (criteriaMet.digit) {
+                message += "<li class='text-success'>Password should contain numbers</li>";
+            } else {
+                message += "<li class='text-danger'>Password should contain numbers</li>";
+            }
+
+            if (criteriaMet.specialChar) {
+                message += "<li class='text-success'>Password should contain special characters</li>";
+            } else {
+                message += "<li class='text-danger'>Password should contain special characters</li>";
+            }
+
+            if (criteriaMet.minLength) {
+                message += "<li class='text-success'>Password length should be greater than 8</li>";
+            } else {
+                message += "<li class='text-danger'>Password length should be greater than 8</li>";
+            }
+
+            message += "</ul>";
+
+            return message;
+        }
+
+        function checkPasswordMatch(password, confirmPassword) {
+            // Check if passwords match and display match message
+            if (password === confirmPassword) {
+                matchMessage.innerHTML = "<span class='text-success'>Passwords match</span>";
+            } else {
+                matchMessage.innerHTML = "<span class='text-danger'>Passwords do not match</span>";
+            }
+        }
+
+        function updateSubmitButton(criteriaMet, password, confirmPassword) {
+            // Enable or disable the submit button based on the criteria and password match
+            if (
+                criteriaMet.lowercase &&
+                criteriaMet.uppercase &&
+                criteriaMet.digit &&
+                criteriaMet.specialChar &&
+                criteriaMet.minLength &&
+                password === confirmPassword
+            ) {
+                submitButton.removeAttribute("disabled");
+            } else {
+                submitButton.setAttribute("disabled", "disabled");
+            }
+        }
+    });
+</script>
+</body>
+</html>

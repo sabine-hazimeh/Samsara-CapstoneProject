@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>My Posts</title>
+    <!-- Include necessary CSS links here -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="stylesheet"  th:href="@{/css/style.css}" />
+    <link rel="stylesheet"  th:href="@{/css/site.css}" />
+    <link rel="stylesheet" th:href="@{/css/helper.css}" />
+    <link rel="stylesheet" th:href="@{/css/plugins.css}" />
+    <link rel="stylesheet" th:href="@{/css/app.min.css}" />
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+    <link rel="stylesheet" th:href="@{/css/custom.min.css}" />
+    <link rel="stylesheet" th:href="@{/fonts/FontAwesome.otf}" />
+    <style>
+        /* Style for delete and update buttons */
+        .delete-btn, .update-btn {
+            background-color: #405189;
+            color: #e8bc52;
+            border: none;
+            padding: 8px 16px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .delete-btn:hover, .update-btn:hover {
+            background-color: #e8bc52;
+            color: #405189;
+        }
+    </style>
+</head>
+<body>
+<div th:replace="fragment/header :: header"></div>
+<h1>My Posts</h1>
+
+<div class="container">
+    <div class="row">
+        <div th:if="${not #lists.isEmpty(posts)}" th:each="post : ${posts}" class="col-lg-4 col-md-6 mb-4">
+            <!-- Display post details in a card similar to Shop class -->
+            <div class="property-item mb-40">
+                <a th:href="@{/post/view-post-Detail/{ID}(ID=${post.id})}">
+                    <div class="property-inner">
+                        <div class="image">
+                            <div th:each="picture : ${post.pictures}">
+                                <img th:src="${picture}" alt="">
+                            </div>
+
+                            <ul class="property-feature">
+                                <li>
+                                        <span class="area">
+                                            <img src="http://drive.google.com/uc?export=view&id=12pl1CMox-BSLAmQ43G_9-eTuiE0oJOH6" alt="" th:text="${post.area}"></span>
+                                </li>
+                                <li>
+                                        <span class="bed">
+                                            <img src="http://drive.google.com/uc?export=view&id=1lWwcNolnIGzhKA44SFGJx57lYDzI7TE8" alt="" th:text="${post.bedroomNb}"></span>
+                                </li>
+                                <li>
+                                        <span class="bath">
+                                            <img src="http://drive.google.com/uc?export=view&id=1_6GbQnj30rmjc8OwXe7bgb5dh8I4sUE1" alt="" th:text="${post.bathroomNb}"></span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="content">
+                            <div class="left">
+                                <span class="location" th:text="${post.location}"></span>
+                            </div>
+                            <div class="right">
+                                <div class="type-wrap">
+                                    <span class="price" th:text="${post.price} + '$'"></span>
+                                    <span class="type" th:text="${post.status}"></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="buttons">
+                            <a th:href="@{/post/delete-post/{id}(id=${post.id})}" class="btn delete-btn mt-3">Delete</a>
+                            <a th:href="@{/post/update-post/{id}(id=${post.id})}" class="btn update-btn mt-3">Update</a>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div th:if="${#lists.isEmpty(posts)}">
+    <p>No posts found for this user.</p>
+</div>
+
+<div th:if="${errorMessage}">
+    <p th:text="${errorMessage}"></p>
+</div>
+
+<div th:replace="fragment/footer :: footer"></div>
+</body>
+</html>

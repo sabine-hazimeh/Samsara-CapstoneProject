@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>LogIn</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="stylesheet"  th:href="@{/css/style.css}" />
+    <link rel="stylesheet"  th:href="@{/css/site.css}" />
+    <link rel="stylesheet" th:href="@{/css/helper.css}" />
+    <link rel="stylesheet" th:href="@{/css/plugins.css}" />
+    <link rel="stylesheet" th:href="@{/css/app.min.css}" />
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+    <link rel="stylesheet" th:href="@{/css/custom.min.css}" />
+    <link rel="stylesheet" th:href="@{/fonts/FontAwesome.otf}" />
+</head>
+<body>
+<div th:replace="fragment/header :: header"></div>
+<div class="row">
+    <div class="col-md-12 mb-60 mb-xs-30">
+        <div class="section-title center">
+            <h1>LogIn</h1>
+        </div>
+    </div>
+</div>
+
+<form class="m-5 text-center w-50 mx-auto border rounded p-4 border-dark" th:action="@{/login}" method="post">
+    <div class="mb-3">
+        <label for="UserName" class="form-label font-weight-bold h5">UserName</label>
+        <input type="text" class="form-control small-input" id="UserName" name="username" required>
+    </div>
+    <div class="mb-3">
+        <label for="password" class="form-label font-weight-bold h5">Password</label>
+        <input type="password" class="form-control small-input" id="password" name="password" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Login</button>
+    <p class="text-center mt-3">
+        Don't have an account? <a href="/Register/display-Register">Register</a>
+    </p>
+</form>
+
+
+<div th:replace="fragment/footer :: footer"></div>
+</body>
+</html>

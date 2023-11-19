@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Employee Register</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <link rel="stylesheet" th:href="@{/css/site.css}" />
+    <link rel="stylesheet" th:href="@{/css/helper.css}" />
+    <link rel="stylesheet" th:href="@{/css/plugins.css}" />
+    <link rel="stylesheet" th:href="@{/css/app.min.css}" />
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+    <link rel="stylesheet" th:href="@{/css/custom.min.css}" />
+    <link rel="stylesheet" th:href="@{/fonts/FontAwesome.otf}" />
+</head>
+<body>
+<div th:replace="fragment/header :: header"></div>
+<div class="row">
+    <div class="col-md-12 mb-60 mb-xs-30">
+        <div class="section-title center">
+            <h1>Please Fill This Form</h1>
+        </div>
+    </div>
+</div>
+<!--th:action="@{/Employee/create}" method="post" th:object="${Client}"-->
+<form class="m-5 text-center w-50 mx-auto border rounded p-4 border-dark" th:action="@{/Employee/create}" method="post" th:object="${employee}">
+    <div class="mb-3">
+        <label for="userName" class="form-label font-weight-bold h5">User Name</label>
+        <input type="text" class="form-control small-input" id="userName" th:field="*{username}" required>
+    </div>
+    <div class="mb-3">
+        <label for="firstName" class="form-label font-weight-bold h5">First Name</label>
+        <input type="text" class="form-control small-input" id="firstName" th:field="*{firstName}" required>
+    </div>
+    <div class="mb-3">
+        <label for="lastName" class="form-label font-weight-bold h5">Last Name</label>
+        <input type="text" class="form-control small-input" id="lastName" th:field="*{lastName}" required>
+    </div>
+    <div class="mb-3">
+        <label for="PhoneNumber" class="form-label font-weight-bold h5">Phone Number</label>
+        <input type="text" class="form-control small-input" id="PhoneNumber" th:field="*{phoneNumber}" required>
+    </div>
+    <div class="mb-3">
+        <label for="healthProblem" class="form-label font-weight-bold h5">Health Problem</label>
+        <input type="text" class="form-control small-input" id="healthProblem" th:field="*{healthProblem}" required>
+    </div>
+    <div class="mb-3">
+        <label for="Email" class="form-label font-weight-bold h5">Email</label>
+        <input type="email" class="form-control small-input" id="Email" th:field="*{email}" required>
+    </div>
+    <div class="mb-3">
+        <label for="password" class="form-label font-weight-bold h5">Password</label>
+        <input type="password" class="form-control small-input" id="password" th:field="*{password}" required>
+    </div>
+    <label for="dob" class="form-label font-weight-bold h5">Date of Birth:</label>
+    <input type="date" id="dob" name="dob" class="form-control small-input" th:field="*{dob}" required>
+    <div class="mb-3">
+        <label for="experience" class="form-label font-weight-bold h5">Experience</label>
+        <input type="number" class="form-control small-input" id="experience" th:field="*{experience}" required>
+    </div>
+    <div class="mb-3">
+        <button type="submit" class="btn btn-primary mb-3">Create Account</button>
+    </div>
+</form>
+</body>
+</html>

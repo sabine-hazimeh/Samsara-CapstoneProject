@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Wishlist</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Add FontAwesome CSS for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="stylesheet"  th:href="@{/css/style.css}" />
+    <link rel="stylesheet"  th:href="@{/css/site.css}" />
+    <link rel="stylesheet" th:href="@{/css/helper.css}" />
+    <link rel="stylesheet" th:href="@{/css/plugins.css}" />
+    <link rel="stylesheet" th:href="@{/css/app.min.css}" />
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+    <link rel="stylesheet" th:href="@{/css/custom.min.css}" />
+    <link rel="stylesheet" th:href="@{/fonts/FontAwesome.otf}" />
+    <style>
+
+    a.btn.pastel-button:hover {
+        background-color: #e8bc52;
+        color: #405189;
+        border-color: #e8bc52;
+    }
+    </style>
+
+    </style>
+</head>
+<body>
+<h1 class="text-center mt-3">Wishlist</h1>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 text-right mt-3">
+            <a th:href="@{/wish/clear/{Id}(Id=${wishList.ID})}" class="btn pastel-button font-weight-bold mb-3 pl-3 pr-3 pb-2 pt-2" style="background-color: #405189; color: #e8bc52; border-color: #405189" method="post">
+                Clear
+            </a>
+        </div>
+    </div>
+</div>
+<div class="container">
+    <table class="table table-striped">
+        <thead class="pastel-bg">
+        <tr class="pastel-text">
+            <th>Image</th>
+            <th>Location</th>
+            <th>Price</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="post : ${wishList.PostsList}">
+            <td><img th:src="${post.pictures}" alt="Product Image" style="height:150px; width:150px;"></td>
+            <td th:text="${post.location}"></td>
+            <td th:text="${post.price}"></td>
+            <td>
+                <div class="remove-button">
+                    <a th:href="@{/wish/delete-WishItem/{id}(id=${post.id})}" class="btn pastel-button remove-btn font-weight-bold" style="background-color: #405189; color: #e8bc52; border-color: #405189;">Remove</a>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

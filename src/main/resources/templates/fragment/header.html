@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+<!--Header section start-->
+<header class="header header-stick">
+    <div class="header-bottom menu-center">
+        <div class="container">
+            <div class="row justify-content-between">
+
+                <!--Logo start-->
+                <div class="col mt-10 mb-10">
+                    <div class="logo">
+                            <img src="http://drive.google.com/uc?export=view&id=1rcsyqnq_wbwOGQqVm2pZT3LiRFgW2Sj0" alt="logo" width="65px"/>
+
+                    </div>
+                </div>
+                <!--Logo end-->
+
+                <!--Menu start-->
+                <div class="col d-none d-lg-flex">
+                    <nav class="main-menu">
+                        <ul>
+                            <li>
+                                <a th:href="@{/home/display-home}" class="nav-link">
+                                    <span class="title">Home</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a th:href="@{/post/display-posts}" class="nav-link">
+                                    <span class="title">Shop</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a th:href="@{/post/myposts}" class="nav-link">
+                                    <span class="title">My Posts</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a th:href="@{/wish/display-wish}" class="nav-link">
+                                    <span class="title">WishList</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+                <!--Menu end-->
+
+                <!--User start-->
+<!--                <div class="col mr-sm-50 mr-xs-50">-->
+<!--                    <div class="header-user">-->
+<!--                        <a style="color: black" th:href="@{/logIn/display-logIn}">-->
+<!--                            <span>Login or Register</span>-->
+<!--                        </a>-->
+<!--                    </div>-->
+<!--                </div>-->
+                <div class="col mr-sm-50 mr-xs-50">
+                <div sec:authorize="isAuthenticated()" class="d-inline">
+                    <form class="siteLink" id="logoutForm" th:action="@{/logout}" method="post">
+                        <div class="d-flex align-items-center justify-content-end">
+                            <div class="d-flex flex-column align-items-center">
+                                <span class="text-dark fw-bold">Logged in as:</span>
+                                <span class="text-dark mt-1" th:text="${#authentication.principal.username}"></span>
+                            </div>
+                            <div class="blackLink" >
+                                <a href="/logout">
+                                <i id="loggedOutIcon" style="color:black;" class="fas fa-sign-out-alt fa-2x pastel-text ml-3"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div sec:authorize="isAnonymous()" class="d-inline">
+                    <a th:href="@{/logIn/display-logIn}" style="color: black"><span>Login or Register</span></a>
+                </div>
+                    </div>
+                <!--User end-->
+            </div>
+
+            <!--Mobile Menu start-->
+            <div class="row">
+                <div class="col-12 d-flex d-lg-none">
+                    <div class="mobile-menu"></div>
+                </div>
+            </div>
+            <!--Mobile Menu end-->
+
+        </div>
+    </div>
+</header>
+<!--Header section end-->
+
+</body>
+</html>
