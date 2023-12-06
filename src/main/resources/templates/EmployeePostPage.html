@@ -41,6 +41,25 @@
     pointer-events: none; /* Disable pointer events */
 }
 
+    /* Add this CSS to change the size and position of the delete icon */
+     .delete {
+        position: relative;
+    }
+
+    .delete button {
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        border: none;
+        background: transparent;
+    }
+
+    .delete button i {
+        font-size: 24px; /* Adjust the font size as per your requirement */
+    }
+
+
     </style>
 </head>
 <body>
@@ -184,11 +203,18 @@
                                     <button type="submit" style="border:none; background: transparent;"><i class="far fa-heart"></i></button>
                                 </form>
                             </div>
+<!--                            <div class="delete">-->
+<!--                            <form th:action="@{/Employee/delete-post/{postId}(postId=${post.id})}" method="post" onsubmit="return confirm('Are you sure you want to delete this post?');">-->
+<!--                                <button type="submit" style="border: none; background: transparent;"><i class="fas fa-trash"></i></button>-->
+<!--                            </form>-->
+<!--                        </div>-->
                             <div class="delete">
-                            <form th:action="@{/Employee/delete-post/{postId}(postId=${post.id})}" method="post" onsubmit="return confirm('Are you sure you want to delete this post?');">
-                                <button type="submit" style="border: none; background: transparent;"><i class="fas fa-trash"></i></button>
-                            </form>
-                        </div>
+                                <form th:action="@{/Employee/delete-post/{postId}(postId=${post.id})}" method="post" onsubmit="return confirm('Are you sure you want to delete this post?');">
+                                    <button type="submit" style="border: none; background: transparent;">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </a>
