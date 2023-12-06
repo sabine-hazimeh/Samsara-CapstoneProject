@@ -3,47 +3,98 @@
 <head>
     <meta charset="UTF-8">
     <title>Search Results</title>
-    <!-- Add your CSS links -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Add other CSS files if needed -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="stylesheet"  th:href="@{/css/style.css}" />
+    <link rel="stylesheet"  th:href="@{/css/site.css}" />
+    <link rel="stylesheet" th:href="@{/css/helper.css}" />
+    <link rel="stylesheet" th:href="@{/css/plugins.css}" />
+    <link rel="stylesheet" th:href="@{/css/app.min.css}" />
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+    <link rel="stylesheet" th:href="@{/css/custom.min.css}" />
+    <style>
+        .sold-out-label {
+    background-color: #405189;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-weight: bold;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+/* CSS for disabled appearance */
+.property-item.sold-out {
+    opacity: 0.6; /* Reduce opacity for the disabled appearance */
+    pointer-events: none; /* Disable pointer events */
+}
+    </style>
 </head>
 <body>
-
+<div th:replace="fragment/header :: header"></div>
 <div class="container">
-    <!-- Header section if required -->
-
     <div class="row">
         <div class="col-md-12 mb-4">
             <h1>Search Results</h1>
         </div>
     </div>
-
     <div class="row">
-        <!-- Iterate over the list of posts -->
-        <div th:each="post : ${Post}" class="col-md-4 mb-4">
-            <div class="card">
-                <!-- Assuming the image URL is stored in the 'picture' attribute of the Post model -->
-<!--                <img th:src="${post.picture}" class="card-img-top" alt="Post Image">-->
-                <div class="card-body">
-<!--                    <h5 class="card-title" th:text="${post.title}"></h5>-->
-                    <!-- Display other relevant post details -->
-                    <p class="card-text">Location: <span th:text="${post.location}"></span></p>
-                    <p class="card-text">Bedrooms: <span th:text="${post.bedroomNb}"></span></p>
-                    <p class="card-text">Bathrooms: <span th:text="${post.bathroomNb}"></span></p>
-                    <p class="card-text">Price: <span th:text="${post.price}"></span></p>
-                    <!-- Add other details you want to display -->
-                    <!-- Add a button or link to view more details if needed -->
-                    <a th:href="@{/post/view/{postId}(postId=${post.id})}" class="btn btn-primary">View Details</a>
+        <div th:each="post : ${post}" class="property-item mb-40 col-4" th:classappend="${!post.available} ? 'sold-out' : ''">
+            <a th:href="@{/post/view-post-Detail/{ID}(ID=${post.id})}">
+                <div class="property-inner ">
+                    <div class="image">
+                        <div th:each="image : ${post.images}">
+                            <td>
+                                <img alt="" th:src="'data:image/jpeg;base64,' + ${image.image}">
+                            </td>
+                        </div>
+
+
+                        <ul class="property-feature">
+                            <li>
+                                        <span class="area">
+                                            <img src="http://drive.google.com/uc?export=view&id=12pl1CMox-BSLAmQ43G_9-eTuiE0oJOH6" alt="" th:text="${post.area}"></span>
+                            </li>
+                            <li>
+                                        <span class="bed">
+                                            <img src="http://drive.google.com/uc?export=view&id=1lWwcNolnIGzhKA44SFGJx57lYDzI7TE8" alt="" th:text="${post.bedroomNb}"></span>
+                            </li>
+                            <li>
+                                        <span class="bath">
+                                            <img src="http://drive.google.com/uc?export=view&id=1_6GbQnj30rmjc8OwXe7bgb5dh8I4sUE1" alt="" th:text="${post.bathroomNb}"></span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="content">
+                        <div class="left">
+                                    <span class="location">
+                                        <img src="http://drive.google.com/uc?export=view&id=1HGbxyuvjC1-SSh4Nrbpvx7v_AOb5QhmN" alt="" th:text="${post.location}"></span>
+                        </div>
+                        <div class="right">
+                            <div class="type-wrap">
+                                        <span class="price" th:text="${post.price}">
+                                            <p>$</p>
+                                        </span>
+                                <span class="type" th:text="${post.status}"></span>
+                                <span th:if="${!post.available}" class="sold-out-label">Sold Out</span>
+                            </div>
+                        </div>
+                        <div class="wishlist">
+                            <form th:action="@{/wish/add/{postId}(postId=${post.id})}" method="post">
+                                <button type="submit" style="border:none; background: transparent;"><i class="far fa-heart"></i></button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
-            </div>
+            </a>
         </div>
     </div>
 
-    <!-- Pagination if needed -->
+</div>
 </div>
 
-<!-- Add your scripts and other body elements here -->
-<!-- Add your JS links -->
+<div th:replace="fragment/footer :: footer"></div>
 
 </body>
 </html>

@@ -1,32 +1,7 @@
-package com.Samsara.Capstone.Project.Security;//package com.Samsara.Capstone.Project.Security;
-//
-//
-//
-//import com.Samsara.Capstone.Project.Model.Client;
-//import com.Samsara.Capstone.Project.Service.ClientService;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.context.annotation.Configuration;
-//import org.springframework.security.core.userdetails.UserDetails;
-//import org.springframework.security.core.userdetails.UserDetailsService;
-//import org.springframework.security.core.userdetails.UsernameNotFoundException;
-//
-//import java.util.Optional;
-//
-//@Configuration
-//public class UserInfoDetailsService implements UserDetailsService {
-//    @Autowired
-//    private ClientService clientService;
-//    @Override
-//    public UserDetails loadUserByUsername(String credential) throws UsernameNotFoundException {
-//        Optional<Client> client;
-//       client = clientService.findClientByUserName(credential);
-//        return client.map(UserInfoDetails::new).orElseThrow(() -> new UsernameNotFoundException("The user credential is not found"));
-//    }
-//
-//}
+package com.Samsara.Capstone.Project.Security;
+
 import com.Samsara.Capstone.Project.Model.Client;
 import com.Samsara.Capstone.Project.Model.Employee;
-import com.Samsara.Capstone.Project.Security.UserInfoDetails;
 import com.Samsara.Capstone.Project.Service.ClientService;
 import com.Samsara.Capstone.Project.Service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,5 +34,4 @@ public class UserInfoDetailsService implements UserDetailsService {
             }
         }
     }
-
 }

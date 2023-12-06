@@ -13,6 +13,7 @@
     <link rel="stylesheet" th:href="@{/css/app.min.css}" />
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
     <link rel="stylesheet" th:href="@{/css/custom.min.css}" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" th:href="@{/fonts/FontAwesome.otf}" />
     <style>
 
@@ -26,7 +27,15 @@
     </style>
 </head>
 <body>
-<h1 class="text-center mt-3">Wishlist</h1>
+<div th:replace="fragment/header :: header"></div>
+<div class="row">
+    <div class="col-md-12 mb-60 mb-xs-30">
+        <div class="section-title center">
+            <h1>WishList</h1>
+        </div>
+    </div>
+</div>
+
 
 <div class="container">
     <div class="row">
@@ -49,7 +58,14 @@
         </thead>
         <tbody>
         <tr th:each="post : ${wishList.PostsList}">
-            <td><img th:src="${post.pictures}" alt="Product Image" style="height:150px; width:150px;"></td>
+            <td>
+                <a th:href="@{/post/view-post-Detail/{ID}(ID=${post.id})}">
+                <div th:each="image : ${post.images}">
+                        <img alt="" th:src="'data:image/jpeg;base64,' + ${image.image}" style="height:150px; width:150px;">
+
+                </div>
+                </a>
+            </td>
             <td th:text="${post.location}"></td>
             <td th:text="${post.price}"></td>
             <td>
@@ -57,9 +73,11 @@
                     <a th:href="@{/wish/delete-WishItem/{id}(id=${post.id})}" class="btn pastel-button remove-btn font-weight-bold" style="background-color: #405189; color: #e8bc52; border-color: #405189;">Remove</a>
                 </div>
             </td>
+
         </tr>
         </tbody>
     </table>
 </div>
+<div th:replace="fragment/footer :: footer"></div>
 </body>
 </html>

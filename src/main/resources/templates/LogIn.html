@@ -25,6 +25,10 @@
 </div>
 
 <form class="m-5 text-center w-50 mx-auto border rounded p-4 border-dark" th:action="@{/login}" method="post">
+    <fieldset>
+        <div th:if="${errorMessage}" class="error-message">
+            <p th:text="${errorMessage}"></p>
+        </div>
     <div class="mb-3">
         <label for="UserName" class="form-label font-weight-bold h5">UserName</label>
         <input type="text" class="form-control small-input" id="UserName" name="username" required>
@@ -37,6 +41,7 @@
     <p class="text-center mt-3">
         Don't have an account? <a href="/Register/display-Register">Register</a>
     </p>
+    </fieldset>
 </form>
 
 

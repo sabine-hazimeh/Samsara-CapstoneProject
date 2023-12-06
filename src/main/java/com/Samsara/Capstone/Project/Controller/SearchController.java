@@ -31,24 +31,24 @@ public String searchPosts(
     List<Post> searchResults;
 
     if (location != null && bedroomNb != null && bathroomNb != null) {
-        searchResults = postRepository.findByLocationAndBedroomNbAndBathroomNb(location, bedroomNb, bathroomNb);
+        searchResults = postRepository.findByLocationAndBedroomNbAndBathroomNbAndDeleted(location, bedroomNb, bathroomNb,false);
     } else if (location != null && bedroomNb != null) {
-        searchResults = postRepository.findByLocationAndBedroomNb(location, bedroomNb);
+        searchResults = postRepository.findByLocationAndBedroomNbAndDeleted(location, bedroomNb, false);
     } else if (location != null && bathroomNb != null) {
-        searchResults = postRepository.findByLocationAndBathroomNb(location, bathroomNb);
+        searchResults = postRepository.findByLocationAndBathroomNbAndDeleted(location, bathroomNb,false);
     } else if (bedroomNb != null && bathroomNb != null) {
-        searchResults = postRepository.findByBedroomNbAndBathroomNb(bedroomNb, bathroomNb);
+        searchResults = postRepository.findByBedroomNbAndBathroomNbAndDeleted(bedroomNb, bathroomNb,false);
     } else if (location != null) {
-        searchResults = postRepository.findByLocation(location);
+        searchResults = postRepository.findByLocationAndDeleted(location,false);
     } else if (bedroomNb != null) {
-        searchResults = postRepository.findByBedroomNb(bedroomNb);
+        searchResults = postRepository.findByBedroomNbAndDeleted(bedroomNb,false);
     } else if (bathroomNb != null) {
-        searchResults = postRepository.findByBathroomNb(bathroomNb);
+        searchResults = postRepository.findByBathroomNbAndDeleted(bathroomNb,false);
     } else {
         searchResults = new ArrayList<>();
     }
 
-    model.addAttribute("Post", searchResults);
+    model.addAttribute("post", searchResults);
     return "SearchPage";
 }
 

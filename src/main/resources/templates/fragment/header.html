@@ -29,7 +29,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a th:href="@{/post/display-posts}" class="nav-link">
+                                <a th:href="@{/Post/display-posts}" class="nav-link">
                                     <span class="title">Shop</span>
                                 </a>
                             </li>
@@ -43,19 +43,17 @@
                                     <span class="title">WishList</span>
                                 </a>
                             </li>
+                            <li>
+                                <a th:href="@{/client/display-details}" class="nav-link">
+                                    <span class="title">My Profile</span>
+                                </a>
+                            </li>
                         </ul>
                     </nav>
                 </div>
                 <!--Menu end-->
 
                 <!--User start-->
-<!--                <div class="col mr-sm-50 mr-xs-50">-->
-<!--                    <div class="header-user">-->
-<!--                        <a style="color: black" th:href="@{/logIn/display-logIn}">-->
-<!--                            <span>Login or Register</span>-->
-<!--                        </a>-->
-<!--                    </div>-->
-<!--                </div>-->
                 <div class="col mr-sm-50 mr-xs-50">
                 <div sec:authorize="isAuthenticated()" class="d-inline">
                     <form class="siteLink" id="logoutForm" th:action="@{/logout}" method="post">

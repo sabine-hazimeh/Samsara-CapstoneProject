@@ -8,6 +8,7 @@ import lombok.Setter;
 import org.antlr.v4.runtime.misc.NotNull;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 
@@ -15,7 +16,6 @@ import java.util.List;
 @Getter
 @Setter
 @AllArgsConstructor
-@NoArgsConstructor
 @Table(name = "Client")
 public class Client{
 
@@ -36,8 +36,12 @@ public class Client{
 	private String email;
 	@NotNull
 	private String password;
-	
-	@Column(length = 4000)
+	private boolean accountNonLocked;
+	private int failedAttempt;
+	private Date lockTime;
+
+	@Lob
+	@Column(columnDefinition = "MEDIUMBLOB")
 	private String profilePhoto;
 	
 	@OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = false, fetch = FetchType.LAZY)
@@ -45,6 +49,7 @@ public class Client{
 	@OneToOne
 	public WishList wishList;
 
-
-
+	public Client() {
+		this.accountNonLocked = true;
+	}
 }

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Reports Page</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="stylesheet"  th:href="@{/css/style.css}" />
+    <link rel="stylesheet"  th:href="@{/css/site.css}" />
+    <link rel="stylesheet" th:href="@{/css/helper.css}" />
+    <link rel="stylesheet" th:href="@{/css/plugins.css}" />
+    <link rel="stylesheet" th:href="@{/css/app.min.css}" />
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+    <link rel="stylesheet" th:href="@{/css/custom.min.css}" />
+</head>
+<body>
+<!--<div th:replace="fragment/header :: header"></div>-->
+<!--<h1>Reports</h1>-->
+<!--<table>-->
+<!--    <thead>-->
+<!--    <tr>-->
+<!--        <th>Report ID</th>-->
+<!--        <th>Post ID</th>-->
+<!--        <th>Client Phone</th>-->
+<!--        <th>Reported Client Phone</th>-->
+<!--        <th>Cause</th>-->
+<!--    </tr>-->
+<!--    </thead>-->
+<!--    <tbody>-->
+<!--    <tr th:each="report : ${reports}">-->
+<!--        <td th:text="${report.id}"></td>-->
+<!--        <td th:text="${report.post.id}"></td>-->
+<!--        <td th:text="${report.client.phoneNumber}"></td>-->
+<!--        <td th:text="${report.post.client.phoneNumber}"></td>-->
+<!--        <td th:text="${report.cause}"></td>-->
+<!--    </tr>-->
+<!--    </tbody>-->
+<!--</table>-->
+<!--<div th:replace="fragment/footer :: footer"></div>-->
+<div th:replace="fragment/header :: header"></div>
+<div class="row">
+    <div class="col-md-12 mb-60 mb-xs-30">
+        <div class="section-title center">
+            <h1>Reports</h1>
+        </div>
+    </div>
+</div>
+<div class="container">
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>Report ID</th>
+                <th>Post ID</th>
+                <th>Client Phone</th>
+                <th>Reported Client Phone</th>
+                <th>Cause</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="report : ${reports}">
+                <td th:text="${report.id}"></td>
+                <td>
+                    <!-- Link to view post details -->
+                    <a th:href="@{/Post/view-post-Detail/{ID}(ID=${report.post.id})}" th:text="${report.post.id}">
+                        View Post Details
+                    </a>
+                </td>
+                <td>
+                    <a th:href="'http://wa.me/' + ${report.client.phoneNumber}" th:text="${report.client.phoneNumber}" target="_blank">
+                        Client WhatsApp
+                    </a>
+                </td>
+                <td>
+                    <a th:href="'http://wa.me/' + ${report.post.client.phoneNumber}" th:text="${report.post.client.phoneNumber}"> target="_blank">
+                        Reported Client Phone
+                    </a>
+                </td>
+                <td th:text="${report.cause}"></td>
+                <td>
+                <form th:action="@{/Employee/delete-report/{id}(id=${report.id})}" method="get" style="display: inline;">
+                    <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this report?')">Delete</button>
+                </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div th:replace="fragment/footer :: footer"></div>
+</body>
+</html>

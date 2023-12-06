@@ -5,7 +5,6 @@ import com.Samsara.Capstone.Project.enums.WaterType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.ArrayList;
@@ -25,7 +24,6 @@ public class Post {
 	@Version
 	@Column(name = "version")
 	private int version;
-	
 	private String city;
 	private int bedroomNb;
 	private int bathroomNb;
@@ -40,22 +38,19 @@ public class Post {
 	private long longitude;
 	private long altitude;
 	private String location;
-	@ElementCollection
-	@CollectionTable(name = "post_pictures", joinColumns = @JoinColumn(name = "post_id"))
-	@Lob
-	@Column(name = "picture")
-	private List<String> pictures = new ArrayList<>();
+	private boolean deleted;
+	@OneToMany
+	private List<PostPicture> images;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "client_id")
 	private Client client;
 	
-	@OneToMany(mappedBy = "post", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "post", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Review> reviews;
 	
-	@OneToMany(mappedBy = "post", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "post", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private List<Report> reports;
-
 	@Override
 	public String toString() {
 		String result = getClass().getSimpleName() + " ";
@@ -67,7 +62,6 @@ public class Post {
 
 	public Post() {
 		this.reports = new ArrayList<>();
-//		this.reviews = new ArrayList<>();
 		this.available = true;
 	}
 

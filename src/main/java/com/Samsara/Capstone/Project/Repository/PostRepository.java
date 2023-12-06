@@ -7,26 +7,16 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 public interface PostRepository extends JpaRepository<Post, Long> {
-    List<Post> findByClientId(Long clientId);
-    @Query(value="SELECT * FROM Post p WHERE p.location = :location AND p.bedroom_nb = :bedroomNb AND p.bathroom_nb = :bathroomNb", nativeQuery = true)
-    List<Post> findByLocationAndBedroomNbAndBathroomNb(String location, Integer bedroomNb, Integer bathroomNb);
+    List<Post> findByClientIdAndDeleted(Long clientId, boolean deleted);
+    @Query(value="SELECT * FROM Post p WHERE p.deleted = false", nativeQuery = true)
+    List<Post> findByDeleted();
+    List<Post> findByLocationAndBedroomNbAndBathroomNbAndDeleted(String location, Integer bedroomNb, Integer bathroomNb, boolean deleted);
+    List<Post> findByLocationAndBedroomNbAndDeleted(String location, Integer bedroomNb, boolean deleted);
+    List<Post> findByLocationAndBathroomNbAndDeleted(String location, Integer bathroomNb, boolean deleted);
+    List<Post> findByBedroomNbAndBathroomNbAndDeleted(Integer bedroomNb, Integer bathroomNb, boolean deleted);
+    List<Post> findByLocationAndDeleted(String location, boolean deleted);
+    List<Post> findByBedroomNbAndDeleted(Integer bedroomNb, boolean deleted);
+    List<Post> findByBathroomNbAndDeleted(Integer bathroomNb, boolean deleted);
 
-    @Query(value="SELECT * FROM Post p WHERE p.location = :location AND p.bedroom_nb = :bedroomNb", nativeQuery = true)
-    List<Post> findByLocationAndBedroomNb(String location, Integer bedroomNb);
-
-    @Query(value="SELECT * FROM Post p WHERE p.location = :location AND p.bathroom_nb = :bathroomNb", nativeQuery = true)
-    List<Post> findByLocationAndBathroomNb(String location, Integer bathroomNb);
-
-    @Query(value="SELECT * FROM Post p WHERE p.bedroomNb = :bedroomNb AND p.bathroom_nb = :bathroomNb", nativeQuery = true)
-    List<Post> findByBedroomNbAndBathroomNb(Integer bedroomNb, Integer bathroomNb);
-
-    @Query(value="SELECT * FROM Post p WHERE p.location = :location", nativeQuery = true)
-    List<Post> findByLocation(String location);
-
-    @Query(value="SELECT * FROM Post p WHERE p.bedroom_nb = :bedroomNb", nativeQuery = true)
-    List<Post> findByBedroomNb(Integer bedroomNb);
-
-    @Query(value="SELECT * FROM Post p WHERE p.bathroom_nb = :bathroomNb", nativeQuery = true)
-    List<Post> findByBathroomNb(Integer bathroomNb);
 
 }

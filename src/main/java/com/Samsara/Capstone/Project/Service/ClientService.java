@@ -1,23 +1,25 @@
 package com.Samsara.Capstone.Project.Service;
 
-import com.Samsara.Capstone.Project.Model.Client;
-import com.Samsara.Capstone.Project.Model.WishList;
+import com.Samsara.Capstone.Project.Model.*;
 import com.Samsara.Capstone.Project.Repository.ClientRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
-import java.util.Optional;
+import java.io.IOException;
+import java.util.*;
 
 @Service
 public class ClientService {
     private final ClientRepository clientRepository;
     private final PasswordEncoder passwordEncoder;
     private final WishListService wishListService;
+    public static final int MAX_FAILED_ATTEMPTS = 3;
+
+    private static final long LOCK_TIME_DURATION =  60 * 1000; // 1 minute
+
 
     @Autowired
     public ClientService(ClientRepository clientRepository, PasswordEncoder passwordEncoder, WishListService wishListService){
@@ -52,15 +54,24 @@ public class ClientService {
         return clientRepository.findById(id).orElse(null);
     }
 
-    public Client createClient(Client client){
+    public Client createClient(Client client, MultipartFile files) throws IOException {
         client.setPassword(passwordEncoder.encode(client.getPassword()));
         WishList wishList = new WishList();
         wishList = wishListService.createWish(wishList);
         client.setWishList(wishList);
+        String encodedImage = Base64.getEncoder().encodeToString(files.getBytes());
+
+        client.setProfilePhoto(encodedImage);
         return clientRepository.save(client);
     }
-
-    public Client updateClient(Client client){
+    @Transactional
+    public Client updateClient(Client client, MultipartFile file ) throws IOException {
+        if (file != null && !file.isEmpty()) {
+            byte[] fileBytes = file.getBytes();
+            String encodedImage = Base64.getEncoder().encodeToString(fileBytes);
+            client.setProfilePhoto(encodedImage);
+        }
+        client.setWishList(client.getWishList());
         return clientRepository.save(client);
     }
     public void deleteUser(Long id){
@@ -91,5 +102,6 @@ public class ClientService {
 //        UserInfoDetails userInfoDetails = (UserInfoDetails) userDetails;
 //        return userInfoDetails.getUserId().equals(id);
 //    }
+
 
 }

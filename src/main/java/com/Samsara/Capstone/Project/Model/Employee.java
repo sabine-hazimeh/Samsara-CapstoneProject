@@ -15,7 +15,6 @@ import java.util.Date;
 @Getter
 @Setter
 @AllArgsConstructor
-@NoArgsConstructor
 @Table(name = "employee")
 public class Employee{
 	@Id
@@ -30,6 +29,9 @@ public class Employee{
 	private String lastName;
 	private String phoneNumber;
 	private String healthProblem;
+	private boolean accountNonLocked;
+	private int failedAttempt;
+	private Date lockTime;
 	
 	@NotNull
 	private String email;
@@ -38,8 +40,9 @@ public class Employee{
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date dob;
 	private int experience;
-	
+	public Employee() {
+		this.accountNonLocked = true;
+	}
 
-	
-	
+
 }

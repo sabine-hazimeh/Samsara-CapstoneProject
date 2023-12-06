@@ -21,21 +21,21 @@ public class ReviewService {
         return reviewRepository.save(review);
     }
 
-    // Get a review by its ID
-    public Review getReviewById(Long id) {
-        return reviewRepository.findById(id).orElse(null);
-    }
-
-    // Get all reviews
-    public List<Review> getAllReviews() {
-        return reviewRepository.findAll();
-    }
-
-    // Delete a review by its ID
-    public void deleteReviewById(Long id) {
-        reviewRepository.deleteById(id);
-    }
-
+//    // Get a review by its ID
+//    public Review getReviewById(Long id) {
+//        return reviewRepository.findById(id).orElse(null);
+//    }
+//
+//    // Get all reviews
+//    public List<Review> getAllReviews() {
+//        return reviewRepository.findAll();
+//    }
+//
+//    // Delete a review by its ID
+//    public void deleteReviewById(Long id) {
+//        reviewRepository.deleteById(id);
+//    }
+//
     public List<Review> getReviewsByPostId(Long postId) {
         return reviewRepository.findByPostId(postId);
     }

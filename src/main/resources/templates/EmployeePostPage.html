@@ -61,7 +61,7 @@
             </div>
             <!--Section Title end-->
             <a th:href="@{/post/add-post}">
-                <button type="button" class="btn btn-primary btn-lg m-3">Add Apartment</button>
+                <button type="button" style="color:#E8B524" class="btn btn-primary btn-lg m-3">Add Apartment</button>
             </a>
             <div class="row">
                 <div class="col">
@@ -100,47 +100,47 @@
                                 </form>
                             </div>
                             <div class="col">
-                                    <form action="#" method="get" id="sortByStatusForm">
-                                        <div class="form-group">
-                                            <select class="form-control" id="sortByStatus">
-                                                <option value="" disabled selected>Sort by Status</option>
-                                                <option value="Rent">Rent</option>
-                                                <option value="Sale">Sale</option>
-                                            </select>
-                                        </div>
-                                    </form>
+                                <form action="#" method="get" id="sortByStatusForm">
+                                    <div class="form-group">
+                                        <select class="form-control" id="sortByStatus">
+                                            <option value="" disabled selected>Sort by Status</option>
+                                            <option value="Rent">Rent</option>
+                                            <option value="Sale">Sale</option>
+                                        </select>
+                                    </div>
+                                </form>
                             </div>
-                     </div>
-
                         </div>
+
                     </div>
-                    <!--Property Search end-->
+                </div>
+                <!--Property Search end-->
+            </div>
+        </div>
+    </div>
+
+
+</div>
+<!--Search Section section end-->
+
+<!--New property section start-->
+<div class="property-section section pb-60 pb-lg-40 pb-md-30 pb-sm-20 pb-xs-10">
+    <div class="container">
+
+        <!--Section Title start-->
+        <div class="row">
+            <div class="col-md-12 mb-60 mb-xs-30">
+                <div class="section-title center">
+                    <h1>Search results</h1>
                 </div>
             </div>
         </div>
+        <!--            Section Title end-->
 
-
-    </div>
-    <!--Search Section section end-->
-
-    <!--New property section start-->
-    <div class="property-section section pb-60 pb-lg-40 pb-md-30 pb-sm-20 pb-xs-10">
-        <div class="container">
-
-            <!--Section Title start-->
-            <div class="row">
-                <div class="col-md-12 mb-60 mb-xs-30">
-                    <div class="section-title center">
-                        <h1>Search results</h1>
-                    </div>
-                </div>
-            </div>
-<!--            Section Title end-->
-
-            <div class="row">
-                <!-- Iterate over the list of Apartments -->
-                <div th:each="post : ${Post}" class="property-item mb-40 col-4"  th:classappend="${!post.available} ? 'sold-out' : ''">
-                    <a th:href="@{/Post/view-post-Detail/{ID}(ID=${post.id})}">
+        <div class="row">
+            <!-- Iterate over the list of Apartments -->
+            <div th:each="post : ${posts}" class="property-item mb-40 col-4"  th:classappend="${!post.available} ? 'sold-out' : ''">
+                <a th:href="@{/Post/view-post-Detail/{ID}(ID=${post.id})}">
                     <div class="property-inner ">
                         <div class="image">
                             <div th:each="image : ${post.images}">
@@ -184,14 +184,19 @@
                                     <button type="submit" style="border:none; background: transparent;"><i class="far fa-heart"></i></button>
                                 </form>
                             </div>
+                            <div class="delete">
+                            <form th:action="@{/Employee/delete-post/{postId}(postId=${post.id})}" method="post" onsubmit="return confirm('Are you sure you want to delete this post?');">
+                                <button type="submit" style="border: none; background: transparent;"><i class="fas fa-trash"></i></button>
+                            </form>
+                        </div>
                         </div>
                     </div>
-                    </a>
-                </div>
+                </a>
             </div>
-
         </div>
+
     </div>
+</div>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>

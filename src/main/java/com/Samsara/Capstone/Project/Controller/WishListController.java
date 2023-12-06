@@ -39,6 +39,7 @@ public class WishListController {
         Client client = clientService.getClientById(userInfoDetails.getUserId());
         WishList wishList = wishListService.getWishById(client.getWishList().getID());
         model.addAttribute("wishList", wishList);
+
         return "WishList";
     }
 

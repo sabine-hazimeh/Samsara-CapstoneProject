@@ -42,13 +42,27 @@
             color: #FFD700;
         }
 
+        /* Set the map container size */
+        #map {
+            height: 400px; /* Adjust the height as needed */
+        }
     </style>
 </head>
 <body>
+<div th:replace="fragment/header :: header"></div>
+<div class="row">
+    <div class="col-md-12 mb-60 mb-xs-30">
+        <div class="section-title center">
+            <h1>Post Details</h1>
+        </div>
+    </div>
+</div>
 <div class="property-details">
     <div class="image-slider">
-        <div th:each="picture : ${post.pictures}">
-            <img th:src="${picture}" alt="">
+        <div th:each="image : ${post.images}">
+            <td>
+                <img alt="" th:src="'data:image/jpeg;base64,' + ${image.image}">
+            </td>
         </div>
     </div>
     <div class="details">
@@ -63,9 +77,10 @@
         <p class="description" th:text="${post.description}"></p>
         <p class="bathrooms" th:text="${post.bathroomNb}"></p>
         <p class="bedrooms" th:text="${post.bedroomNb}"></p>
+        <div id="map"></div>
         <div class="row">
             <div class="col-md-3">
-                <a th:href="@{/post/display-client-details/{postId}(postId=${post.id})}" class="btn pastel-button mb-3 pb-2 pt-2" style="background-color: #405189; color: #e8bc52; border-color: #405189" method="get">
+                <a th:href="@{/Post/display-client-details/{postId}(postId=${post.id})}" class="btn pastel-button mb-3 pb-2 pt-2" style="background-color: #405189; color: #e8bc52; border-color: #405189" method="get">
                     View Seller Details
                 </a>
             </div>
@@ -110,8 +125,52 @@
             <p>No reviews available for this post.</p>
         </div>
     </div>
-
+    <button id="reportBtn" onclick="toggleReportTextarea()">Report this post</button>
+    <div id="reportTextarea" style="display: none;">
+        <form th:action="@{'/post/add-report/' + ${post.id}}" method="post" th:object="${report}">
+        <textarea id="reportReason" placeholder="Write your report reason here..." th:field="*{cause}"></textarea>
+        <button type="submit">Submit Report</button>
+        </form>
+    </div>
 </div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- ... (other script tags you might have) ... -->
 
+<!-- Add the Google Maps API script -->
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDpNsy_G914FGySWF2cGGYUgWGopEWM57Y&callback=initMap" async defer></script>
+
+<!-- Add the JavaScript code to display the map -->
+<script>
+    function initMap() {
+        // Replace these Thymeleaf expressions with actual latitude and longitude values
+        const latitude = [[${post.altitude}]];
+        const longitude = [[${post.longitude}]];
+
+        // Create a map centered at the provided coordinates
+        const map = new google.maps.Map(document.getElementById('map'), {
+            center: { lat: latitude, lng: longitude },
+            zoom: 12 // Adjust the initial zoom level as needed
+        });
+
+        // Optionally, add a marker at the specified location
+        const marker = new google.maps.Marker({
+            position: { lat: latitude, lng: longitude },
+            map: map,
+            title: 'Property Location' // Replace with a meaningful title
+        });
+    }
+</script>
+<script type="text/javascript">
+    function toggleReportTextarea() {
+        var reportTextarea = document.getElementById("reportTextarea");
+        if (reportTextarea.style.display === "none") {
+            reportTextarea.style.display = "block";
+        } else {
+            reportTextarea.style.display = "none";
+        }
+    }
+
+</script>
+<div th:replace="fragment/footer :: footer"></div>
 </body>
 </html>

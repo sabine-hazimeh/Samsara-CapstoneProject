@@ -31,22 +31,47 @@
             background-color: #e8bc52;
             color: #405189;
         }
+        .sold-out-label {
+    background-color: #405189;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-weight: bold;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+/* CSS for disabled appearance */
+.property-item.sold-out {
+    opacity: 0.6; /* Reduce opacity for the disabled appearance */
+    pointer-events: none; /* Disable pointer events */
+}
+
     </style>
 </head>
 <body>
 <div th:replace="fragment/header :: header"></div>
-<h1>My Posts</h1>
+<div class="row">
+    <div class="col-md-12 mb-60 mb-xs-30">
+        <div class="section-title center">
+            <h1>My Posts</h1>
+        </div>
+    </div>
+</div>
 
 <div class="container">
     <div class="row">
-        <div th:if="${not #lists.isEmpty(posts)}" th:each="post : ${posts}" class="col-lg-4 col-md-6 mb-4">
+        <div th:if="${not #lists.isEmpty(posts)}" th:each="post : ${posts}" class="col-lg-4 col-md-6 mb-4"   th:classappend="${!post.available} ? 'sold-out' : ''">
             <!-- Display post details in a card similar to Shop class -->
             <div class="property-item mb-40">
-                <a th:href="@{/post/view-post-Detail/{ID}(ID=${post.id})}">
+                <a th:href="@{/Post/view-post-Detail/{ID}(ID=${post.id})}">
                     <div class="property-inner">
                         <div class="image">
-                            <div th:each="picture : ${post.pictures}">
-                                <img th:src="${picture}" alt="">
+                            <div th:each="image : ${post.images}">
+                                <td>
+                                    <img alt="" th:src="'data:image/jpeg;base64,' + ${image.image}">
+                                </td>
                             </div>
 
                             <ul class="property-feature">
@@ -72,6 +97,7 @@
                                 <div class="type-wrap">
                                     <span class="price" th:text="${post.price} + '$'"></span>
                                     <span class="type" th:text="${post.status}"></span>
+                                    <span th:if="${!post.available}" class="sold-out-label">Sold Out</span>
                                 </div>
                             </div>
                         </div>
