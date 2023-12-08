@@ -40,7 +40,7 @@
             <!-- container-->
             <div class="hero-slider section">
 
-                <div class="hero-item swap-animation" th:style="'background-image: url(http://drive.google.com/uc?export=view&id=1zVqU3fffVSPX6vuCKVsqr8v7qbSgTl1m)'">
+                <div class="hero-item" th:style="'background-image: url(http://drive.google.com/uc?export=view&id=1zVqU3fffVSPX6vuCKVsqr8v7qbSgTl1m)'">
                     <div class="container">
                         <div class="row">
                             <div class="col-12">
@@ -275,6 +275,32 @@
     </div>
 </div>
 <div th:replace="fragment/footer :: footer"></div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+<script>
+    $(document).ready(function(){
+        // Initialize Slick slider
+        $('.hero-slider').slick({
+            slidesToShow: 1, // Display one slide at a time
+            slidesToScroll: 1, // Scroll one slide at a time
+            infinite: true,
+            fade: true, // Enable fade effect between slides
+            dots: false,
+            prevArrow: '<button class="slick-prev"><i class="fa fa-angle-left"></i></button>',
+            nextArrow: '<button class="slick-next"><i class="fa fa-angle-right"></i></button>',
+            responsive: [
+                {
+                    breakpoint: 992,
+                    settings: {
+                        dots: true,
+                        arrows: false,
+                    }
+                },
+            ]
+        });
+    });
+</script>
+
 </body>
 </html>
 
