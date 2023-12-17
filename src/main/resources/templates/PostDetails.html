@@ -14,132 +14,382 @@
     <link rel="stylesheet" th:href="@{/css/custom.min.css}" />
     <link rel="stylesheet" th:href="@{/fonts/FontAwesome.otf}" />
     <style>
-        a.btn.pastel-button:hover {
-            background-color: #e8bc52;
-            color: #405189;
-            border-color: #e8bc52;
-        }
-        /* Your existing styles */
-        /* ... */
-        .rating {
-            display: flex;
-            flex-direction: row-reverse;
-            justify-content: center;
-        }
-        .rating input {
-            display: none;
-        }
-        .rating label {
-            cursor: pointer;
-            width: 30px;
-            font-size: 24px;
-            color: #FFD700;
-        }
-        .rating label::before {
-            content: '\2605';
-        }
-        .rating input:checked ~ label {
-            color: #FFD700;
-        }
+        .bt{
+     width: auto;
+     background-color: rgb(0, 67, 149);
+     color: rgb(249, 195, 34);
+     font-size: 16px;
+     font-weight: 600;
+     line-height: 30px;
+     border-width: initial;
+     border-style: none;
+     border-color: initial;
+     border-radius: 0;
+     border-image: initial;
+     padding: 10px 40px;
+     margin-bottom: 30px;
 
-        /* Set the map container size */
-        #map {
-            height: 400px; /* Adjust the height as needed */
+     }
+     #reportTextarea {
+    display: none; /* Hide the reportTextarea by default */
+}
+.bt1{
+     width: auto;
+     background-color: rgb(0, 67, 149);
+     color: rgb(249, 195, 34);
+     font-size: 16px;
+     font-weight: 600;
+     line-height: 30px;
+     border-width: initial;
+     border-style: none;
+     border-color: initial;
+     border-radius: 0;
+     border-image: initial;
+     padding: 10px 40px;
+
+
+     }
+
+         .bt:hover {
+     background-color: rgb(249, 195, 34);
+     color: rgb(0, 67, 149);
+ }
+
+         .rating {
+             display: flex;
+         }
+         .rating input {
+             display: none;
+         }
+         .rating label {
+             cursor: pointer;
+             width: 30px;
+             font-size: 24px;
+             color: #FFD700;
+         }
+         .rating label::before {
+             content: '\2605';
+         }
+         .rating input:checked ~ label {
+             color: #FFD700;
+         }
+
+         /* Set the map container size */
+         #map {
+             height: 400px; /* Adjust the height as needed */
+         }
+/* Increase the size of the stars */
+.rating.star-widget .fas.fa-star,
+.rating.star-widget .far.fa-star {
+  font-size: 40px;
+  color: #444;
+}
+
+/* Change the background color of filled stars */
+.rating.star-widget .fas.fa-star {
+  color: rgb(249, 195, 34);
+}
+        .rating-container {
+ padding: 40px 30px;
+}
+
+.rating-container h5 {
+  margin-bottom: 5px; /* Adjust the space between h5 and stars */
+}
+        .custom-container {
+    display: flex;
+    justify-content: space-between;
+}
+        .cont2{
+        text-align: center;
         }
+/* Style for modal */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+}
+
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
     </style>
 </head>
 <body>
 <div th:replace="fragment/header :: header"></div>
-<div class="row">
-    <div class="col-md-12 mb-60 mb-xs-30">
-        <div class="section-title center">
-            <h1>Post Details</h1>
-        </div>
-    </div>
-</div>
 <div class="property-details">
-    <div class="image-slider">
-        <div th:each="image : ${post.images}">
-            <td>
-                <img alt="" th:src="'data:image/jpeg;base64,' + ${image.image}">
-            </td>
+    <div class="container row2">
+            <div class="col-lg-5 details">
+                <p class="price" th:text="${post.price} + ' $'"></p>
+                <p class="city" th:text="${post.city}"></p>
+                <p class="location" th:text="${post.location}"></p>
+                <p class="area" th:text="${post.area + ' sqft'}"></p>
+                <p class="floor" th:text="${post.floor}"></p>
+                <p class="building-floors" th:text="${post.buildingFloorNb}"></p>
+                <p class="water-type" th:text="${post.waterType}"></p>
+                <p class="status" th:text="${post.status}"></p>
+                <p class="description" th:text="${post.description}"></p>
+                <p class="bathrooms" th:text="${post.bathroomNb}"></p>
+                <p class="bedrooms" th:text="${post.bedroomNb}"></p>
+                    <div class="mt-3">
+                        <a th:href="@{/Post/display-client-details/{postId}(postId=${post.id})}" class="btn bt" method="get">
+                            View Seller Details
+                        </a>
+                    </div>
+            </div>
+        <div class="col-lg-7 image-slider">
+            <div th:each="image : ${post.images}">
+                <td>
+                    <img alt="" th:src="'data:image/jpeg;base64,' + ${image.image}">
+                </td>
+            </div>
         </div>
     </div>
-    <div class="details">
-        <p class="price" th:text="${post.price} + ' $'"></p>
-        <p class="city" th:text="${post.city}"></p>
-        <p class="location" th:text="${post.location}"></p>
-        <p class="area" th:text="${post.area + ' sqft'}"></p>
-        <p class="floor" th:text="${post.floor}"></p>
-        <p class="building-floors" th:text="${post.buildingFloorNb}"></p>
-        <p class="water-type" th:text="${post.waterType}"></p>
-        <p class="status" th:text="${post.status}"></p>
-        <p class="description" th:text="${post.description}"></p>
-        <p class="bathrooms" th:text="${post.bathroomNb}"></p>
-        <p class="bedrooms" th:text="${post.bedroomNb}"></p>
+    <div class="container row2 mt-5">
+    <div class="col-lg-8">
         <div id="map"></div>
-        <div class="row">
-            <div class="col-md-3">
-                <a th:href="@{/Post/display-client-details/{postId}(postId=${post.id})}" class="btn pastel-button mb-3 pb-2 pt-2" style="background-color: #405189; color: #e8bc52; border-color: #405189" method="get">
-                    View Seller Details
-                </a>
-            </div>
-        </div>
-
     </div>
-    <form th:action="@{'/post/add-review/' + ${post.id}}" method="post" th:object="${review}">
-        <div class="RateContainer">
-            <div class="star-widget">
-                <input type="radio" name="rate" th:field="*{rate}" id="rate-5" value="5">
-                <label for="rate-5" class="fas fa-star"></label>
-                <input type="radio" name="rate" id="rate-4" th:field="*{rate}" value="4">
-                <label for="rate-4" class="fas fa-star"></label>
-                <input type="radio" name="rate" id="rate-3" th:field="*{rate}" value="3">
-                <label for="rate-3" class="fas fa-star"></label>
-                <input type="radio" name="rate" id="rate-2" th:field="*{rate}" value="2">
-                <label for="rate-2" class="fas fa-star"></label>
-                <input type="radio" name="rate" id="rate-1" th:field="*{rate}" value="1">
-                <label for="rate-1" class="fas fa-star"></label>
-            </div>
-            <div class="textarea">
-                <label for="description">Describe your experience:</label><br>
-                <textarea cols="30" th:field="*{description}" id="description" placeholder="Describe your experience.." required></textarea><br><br>
-            </div>
-            <div class="btn">
-                <button type="submit">Post</button>
-            </div>
-        </div>
-    </form>
-    <div class="existing-reviews">
-        <h2>Existing Reviews</h2>
-        <div th:if="${post.reviews != null}">
-            <div th:each="review : ${post.reviews}">
-                <div class="review">
-                    <p>Rating: <span th:text="${review.rate}"></span></p>
-                    <p>Description: <span th:text="${review.description}"></span></p>
-                    <!-- Add other review details as needed -->
+        <div class="col-lg-4">
+            <h2 style="color: black;">Your safety matters to us!</h2>
+            <div>
+                <ul style="font-size: 18px; list-style-type: disc;">
+                    <li>Only meet in public / crowded places.</li><br>
+                    <li>Never go alone to meet a buyer / seller, always take someone with you.</li><br>
+                    <li>Check and inspect the product properly before purchasing it.</li><br>
+                    <li>Never pay anything in advance or transfer money before inspecting the product.</li>
+                </ul>
+                <button id="reportBtn" onclick="toggleReportModal()" class="bt">Report post</button>
+
+                <!-- Modal for reporting post -->
+                <div id="reportModal" class="modal">
+                    <div class="modal-content">
+                        <span class="close" onclick="closeReportModal()">&times;</span>
+                        <form id="reportForm" th:action="@{'/post/add-report/' + ${post.id}}" method="post" th:object="${report}">
+                            <div>
+                                <textarea id="reportReason" name="cause" placeholder="Write your report reason here..." th:field="*{cause}"></textarea>
+                            </div>
+                            <div>
+                                <button type="submit" class="bt1">Submit Report</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
-        <div th:if="${post.reviews == null or #lists.isEmpty(post.reviews)}">
-            <p>No reviews available for this post.</p>
-        </div>
-    </div>
-    <button id="reportBtn" onclick="toggleReportTextarea()">Report this post</button>
-    <div id="reportTextarea" style="display: none;">
-        <form th:action="@{'/post/add-report/' + ${post.id}}" method="post" th:object="${report}">
-        <textarea id="reportReason" placeholder="Write your report reason here..." th:field="*{cause}"></textarea>
-        <button type="submit">Submit Report</button>
-        </form>
+
     </div>
 </div>
+</div>
+
+<!--<div class="rating-container">-->
+<!--    <h4>Average Rating</h4>-->
+<!--    <div class="rating star-widget">-->
+<!--        <span th:each="star : ${#numbers.sequence(1, 5)}"-->
+<!--              th:class="${averageRating >= star ? 'fas fa-star' : 'far fa-star'}">-->
+<!--        </span>-->
+<!--    </div>-->
+<!--</div>-->
+
+<!--    <form th:action="@{'/post/add-review/' + ${post.id}}" method="post" th:object="${review}">-->
+<!--        <div class="RateContainer">-->
+<!--            <div class="star-widget">-->
+<!--                <input type="radio" name="rate" th:field="*{rate}" id="rate-5" value="5">-->
+<!--                <label for="rate-5" class="fas fa-star"></label>-->
+<!--                <input type="radio" name="rate" id="rate-4" th:field="*{rate}" value="4">-->
+<!--                <label for="rate-4" class="fas fa-star"></label>-->
+<!--                <input type="radio" name="rate" id="rate-3" th:field="*{rate}" value="3">-->
+<!--                <label for="rate-3" class="fas fa-star"></label>-->
+<!--                <input type="radio" name="rate" id="rate-2" th:field="*{rate}" value="2">-->
+<!--                <label for="rate-2" class="fas fa-star"></label>-->
+<!--                <input type="radio" name="rate" id="rate-1" th:field="*{rate}" value="1">-->
+<!--                <label for="rate-1" class="fas fa-star"></label>-->
+<!--            </div>-->
+<!--            <div class="textarea">-->
+<!--                <textarea cols="30" th:field="*{description}" id="description" placeholder="Describe your experience.." required></textarea><br>-->
+<!--            </div>-->
+<!--            <button type="submit" class="btn bt">Post</button>-->
+<!--        </div>-->
+<!--    </form>-->
+<!--    <div class="existing-reviews">-->
+<!--        <h2 class="rating-container">Existing Reviews</h2>-->
+<!--        <div th:if="${post.reviews != null}" class="rating-container">-->
+<!--            <div th:each="review : ${post.reviews}">-->
+<!--                <div class="review">-->
+<!--                    <p>Rating: <span th:text="${review.rate}"></span></p>-->
+<!--                    <p>Description: <span th:text="${review.description}"></span></p>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div th:if="${post.reviews == null or #lists.isEmpty(post.reviews)}" class="rating-container">-->
+<!--            <p>No reviews available for this post.</p>-->
+<!--        </div>-->
+<!--    </div>-->
+
+
+
+
+
+
+<!--<div class="custom-container row col-lg-8 text-center">-->
+<!--    <div class="row d-flex justify-content-center">-->
+<!--            <h3>Average Rating</h3>-->
+<!--            <div class="rating star-widget">-->
+<!--            <span th:each="star : ${#numbers.sequence(1, 5)}"-->
+<!--                  th:class="${averageRating >= star ? 'fas fa-star' : 'far fa-star'}">-->
+<!--            </span>-->
+<!--            </div>-->
+<!--    </div>-->
+
+<!--        <div class="col-lg-3 mt-4" >-->
+<!--            <h2>Existing Reviews</h2>-->
+<!--            <div th:if="${post.reviews == null or #lists.isEmpty(post.reviews)}">-->
+<!--                <p>No reviews available for this post.</p>-->
+<!--            </div>-->
+<!--            <div th:each="review : ${post.reviews}" class="review">-->
+<!--                <p>Rating: <span th:text="${review.rate}"></span></p>-->
+<!--                <p>Description: <span th:text="${review.description}"></span></p>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    <div class="col-lg-4 mt-4" >-->
+<!--        <form th:action="@{'/post/add-review/' + ${post.id}}" method="post" th:object="${review}">-->
+<!--            <div class="RateContainer">-->
+<!--                <h3>Rate the post</h3>-->
+<!--                <div class="star-widget">-->
+<!--                    <input type="radio" name="rate" th:field="*{rate}" id="rate-5" value="5">-->
+<!--                    <label for="rate-5" class="fas fa-star"></label>-->
+<!--                    <input type="radio" name="rate" id="rate-4" th:field="*{rate}" value="4">-->
+<!--                    <label for="rate-4" class="fas fa-star"></label>-->
+<!--                    <input type="radio" name="rate" id="rate-3" th:field="*{rate}" value="3">-->
+<!--                    <label for="rate-3" class="fas fa-star"></label>-->
+<!--                    <input type="radio" name="rate" id="rate-2" th:field="*{rate}" value="2">-->
+<!--                    <label for="rate-2" class="fas fa-star"></label>-->
+<!--                    <input type="radio" name="rate" id="rate-1" th:field="*{rate}" value="1">-->
+<!--                    <label for="rate-1" class="fas fa-star"></label>-->
+<!--                </div>-->
+<!--                <div class="textarea">-->
+<!--                    <textarea cols="30" th:field="*{description}" id="description" placeholder="Describe your experience.." required></textarea><br>-->
+<!--                </div>-->
+<!--                <button type="submit" class="btn bt">Post</button>-->
+<!--            </div>-->
+<!--        </form>-->
+<!--    </div>-->
+<!--    </div>-->
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-10 text-center">
+            <div class="row d-flex justify-content-center rating star-widget" style="display: flex;">
+                <h3>Average Rating</h3>
+                <span th:each="star : ${#numbers.sequence(1, 5)}"
+                      th:class="${averageRating >= star ? 'fas fa-star' : 'far fa-star'}"</span>
+            </div>
+
+
+
+            <div class="row mt-4">
+                <!-- Existing Reviews -->
+                <div class="col-lg-5">
+                    <div>
+                    <h2>Existing Reviews</h2>
+                    <div th:if="${post.reviews == null or #lists.isEmpty(post.reviews)}">
+                        <p>No reviews available for this post.</p>
+                    </div>
+                    <div th:each="review : ${post.reviews}" class="review">
+                        <p>Rating: <span th:text="${review.rate}"></span></p>
+                        <p>Description: <span th:text="${review.description}"></span></p>
+                    </div>
+                    </div>
+                </div>
+
+                <!-- Post a Review -->
+                <div class="col-lg-5">
+                    <form th:action="@{'/post/add-review/' + ${post.id}}" method="post" th:object="${review}">
+                        <div class="RateContainer">
+                            <h2>Rate the post</h2>
+                            <div class="star-widget">
+                                <input type="radio" name="rate" th:field="*{rate}" id="rate-5" value="5">
+                                                    <label for="rate-5" class="fas fa-star"></label>
+                                                    <input type="radio" name="rate" id="rate-4" th:field="*{rate}" value="4">
+                                                    <label for="rate-4" class="fas fa-star"></label>
+                                                    <input type="radio" name="rate" id="rate-3" th:field="*{rate}" value="3">
+                                                    <label for="rate-3" class="fas fa-star"></label>
+                                                    <input type="radio" name="rate" id="rate-2" th:field="*{rate}" value="2">
+                                                    <label for="rate-2" class="fas fa-star"></label>
+                                                    <input type="radio" name="rate" id="rate-1" th:field="*{rate}" value="1">
+                                                    <label for="rate-1" class="fas fa-star"></label>
+                            </div>
+                            <div class="textarea">
+                                <textarea cols="30" th:field="*{description}" id="description" placeholder="Describe your experience.." required></textarea><br>
+                            </div>
+                            <button type="submit" class="btn bt">Post</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--    <div class="col-md-6 row d-flex justify-content-center">-->
+<!--        <form th:action="@{'/post/add-review/' + ${post.id}}" method="post" th:object="${review}">-->
+<!--            <div class="RateContainer">-->
+<!--                <h3>Rate the post</h3>-->
+<!--                <div class="star-widget">-->
+<!--                    <input type="radio" name="rate" th:field="*{rate}" id="rate-5" value="5">-->
+<!--                    <label for="rate-5" class="fas fa-star"></label>-->
+<!--                    <input type="radio" name="rate" id="rate-4" th:field="*{rate}" value="4">-->
+<!--                    <label for="rate-4" class="fas fa-star"></label>-->
+<!--                    <input type="radio" name="rate" id="rate-3" th:field="*{rate}" value="3">-->
+<!--                    <label for="rate-3" class="fas fa-star"></label>-->
+<!--                    <input type="radio" name="rate" id="rate-2" th:field="*{rate}" value="2">-->
+<!--                    <label for="rate-2" class="fas fa-star"></label>-->
+<!--                    <input type="radio" name="rate" id="rate-1" th:field="*{rate}" value="1">-->
+<!--                    <label for="rate-1" class="fas fa-star"></label>-->
+<!--                </div>-->
+<!--                <div class="textarea">-->
+<!--                    <textarea cols="30" th:field="*{description}" id="description" placeholder="Describe your experience.." required></textarea><br>-->
+<!--                </div>-->
+<!--                <button type="submit" class="btn bt">Post</button>-->
+<!--            </div>-->
+<!--        </form>-->
+<!--&lt;!&ndash;        <div class="row d-flex justify-content-center">&ndash;&gt;-->
+
+<!--        &lt;!&ndash;        </div>&ndash;&gt;-->
+<!--    </div>-->
+<!--</div>-->
+
+
+</div>
+</div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<!-- ... (other script tags you might have) ... -->
-
-<!-- Add the Google Maps API script -->
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDpNsy_G914FGySWF2cGGYUgWGopEWM57Y&callback=initMap" async defer></script>
-
-<!-- Add the JavaScript code to display the map -->
 <script>
     function initMap() {
         // Replace these Thymeleaf expressions with actual latitude and longitude values
@@ -159,18 +409,54 @@
             title: 'Property Location' // Replace with a meaningful title
         });
     }
-</script>
-<script type="text/javascript">
-    function toggleReportTextarea() {
-        var reportTextarea = document.getElementById("reportTextarea");
-        if (reportTextarea.style.display === "none") {
-            reportTextarea.style.display = "block";
-        } else {
-            reportTextarea.style.display = "none";
-        }
-    }
+    // Function to open the report modal
+function toggleReportModal() {
+  var modal = document.getElementById("reportModal");
+  modal.style.display = "block";
+}
+
+// Function to close the report modal
+function closeReportModal() {
+  var modal = document.getElementById("reportModal");
+  modal.style.display = "none";
+}
+
+// Function to submit the report form (optional)
+document.getElementById("reportForm").addEventListener("submit", function(event) {
+  // You can add AJAX call or any other logic to handle form submission
+  event.preventDefault(); // Prevents the default form submission
+  closeReportModal(); // Close the modal after submission (if needed)
+});
+document.getElementById("reportForm").addEventListener("submit", function(event) {
+  event.preventDefault(); // Prevent default form submission
+  var formData = new FormData(this); // Get form data
+
+  fetch(this.action, {
+    method: this.method,
+    body: formData
+  })
+  .then(response => {
+    // Handle the response or perform actions on successful submission
+    console.log("Report submitted successfully");
+    closeReportModal(); // Close the modal after submission
+  })
+  .catch(error => {
+    // Handle errors if the submission fails
+    console.error("Error submitting report:", error);
+  });
+});
 
 </script>
+<!--<script type="text/javascript">-->
+<!--    function toggleReportTextarea() {-->
+<!--        var reportTextarea = document.getElementById("reportTextarea");-->
+<!--        if (reportTextarea.style.display === "none") {-->
+<!--            reportTextarea.style.display = "block";-->
+<!--        } else {-->
+<!--            reportTextarea.style.display = "none";-->
+<!--        }-->
+<!--    }-->
+<!--</script>-->
 <div th:replace="fragment/footer :: footer"></div>
 </body>
 </html>

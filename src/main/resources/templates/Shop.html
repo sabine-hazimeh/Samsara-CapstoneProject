@@ -13,16 +13,16 @@
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
     <link rel="stylesheet" th:href="@{/css/custom.min.css}" />
     <style>
-        #sortByStatus,
-        #sortByPrice {
-            border: 1px solid #ced4da; /* Matching border color */
-            border-radius: 4px; /* Matching border radius */
-            padding-top: 20px; /* Matching padding */
-            padding-bottom: 20px;
-            width: 300px; /* Full width */
-            color: #495057; /* Matching text color */
-            background-color: inherit; /* Matching background color */
-        }
+<!--        #sortByStatus,-->
+<!--        #sortByPrice {-->
+<!--            border: 1px solid #ced4da; /* Matching border color */-->
+<!--            border-radius: 4px; /* Matching border radius */-->
+<!--&lt;!&ndash;            padding-top: 20px; /* Matching padding */&ndash;&gt;-->
+<!--&lt;!&ndash;            padding-bottom: 20px;&ndash;&gt;-->
+<!--            width: 300px; /* Full width */-->
+<!--            color: #495057; /* Matching text color */-->
+<!--            background-color: inherit; /* Matching background color */-->
+<!--        }-->
         /* CSS for Sold Out label */
 .sold-out-label {
     background-color: #405189;
@@ -40,7 +40,40 @@
     opacity: 0.6; /* Reduce opacity for the disabled appearance */
     pointer-events: none; /* Disable pointer events */
 }
-
+.bt{
+    width: auto;
+    background-color: rgb(0, 67, 149);
+    color: rgb(249, 195, 34);
+    text-transform: uppercase;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 30px;
+    border-width: initial;
+    border-style: none;
+    border-color: initial;
+    border-radius: 0;
+    border-image: initial;
+    padding: 10px 40px;
+    margin-bottom: 30px;
+    }
+        .bt:hover {
+    background-color: rgb(249, 195, 34);
+    color: rgb(0, 67, 149);
+}
+        .property-filter {
+    width: 100%;
+    border: 1px solid #eeeeee;
+    background-color: transparent;
+    line-height: 30px;
+    padding: 9px 20px;
+    color: #666666;
+    font-size: 15px;
+    border-radius: 0;
+    height: auto;
+}
+         .wishlist button i {
+                font-size: 24px;
+            }
     </style>
 </head>
 <body>
@@ -61,11 +94,10 @@
             </div>
             <!--Section Title end-->
             <a th:href="@{/post/add-post}">
-                <button type="button" class="btn btn-primary btn-lg m-3">Add Apartment</button>
+                <button type="button" class="btn bt">Add Apartment</button>
             </a>
             <div class="row">
                 <div class="col">
-
                     <!--Property Search start-->
                     <div class="property-search">
 
@@ -85,34 +117,37 @@
                             <div>
                                 <button type="submit">search</button>
                             </div>
-
                         </form>
-                        <div class="row pt-4" >
-                            <div class="col">
-                                <form action="#" method="get" id="sortPriceForm">
-                                    <div class="form-group">
-                                        <select class="form-control" id="sortByPrice">
-                                            <option value="" disabled selected>Filter by Price</option>
-                                            <option value="lowToHigh">Low to High</option>
-                                            <option value="highToLow">High to Low</option>
-                                        </select>
-                                    </div>
-                                </form>
-                            </div>
-                            <div class="col">
+
+                        <div class="container pt-4">
+                            <div class="row">
+                                <div class="col">
+                                    <form action="#" method="get" id="sortPriceForm">
+                                        <div class="form-group">
+                                            <select class="nice-select property-filter" id="sortByPrice">
+                                                <option value="" disabled selected>Filter by Price</option>
+                                                <option value="lowToHigh">Low to High</option>
+                                                <option value="highToLow">High to Low</option>
+                                            </select>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="col">
                                     <form action="#" method="get" id="sortByStatusForm">
                                         <div class="form-group">
-                                            <select class="form-control" id="sortByStatus">
+                                            <select class="nice-select property-filter" id="sortByStatus">
                                                 <option value="" disabled selected>Sort by Status</option>
                                                 <option value="Rent">Rent</option>
                                                 <option value="Sale">Sale</option>
                                             </select>
                                         </div>
                                     </form>
+                                </div>
                             </div>
-                     </div>
-
                         </div>
+
+
+                    </div>
                     </div>
                     <!--Property Search end-->
                 </div>
@@ -169,21 +204,21 @@
                             <div class="left">
                                     <span class="location">
                                         <img src="http://drive.google.com/uc?export=view&id=1HGbxyuvjC1-SSh4Nrbpvx7v_AOb5QhmN" alt="" th:text="${post.location}"></span>
+                                <div class="wishlist p-3">
+                                    <form th:action="@{/wish/add/{postId}(postId=${post.id})}" method="post">
+                                        <button type="submit" style="border:none; background: transparent;"><i class="far fa-heart"></i></button>
+                                    </form>
+                                </div>
                             </div>
                             <div class="right">
                                 <div class="type-wrap">
-                                        <span class="price" th:text="${post.price}">
-                                            <p>$</p>
-                                        </span>
+                                    <span class="price" th:text="${post.price} + '$'"></span>
                                     <span class="type" th:text="${post.status}"></span>
                                     <span th:if="${!post.available}" class="sold-out-label">Sold Out</span>
                                 </div>
+
                             </div>
-                            <div class="wishlist">
-                                <form th:action="@{/wish/add/{postId}(postId=${post.id})}" method="post">
-                                    <button type="submit" style="border:none; background: transparent;"><i class="far fa-heart"></i></button>
-                                </form>
-                            </div>
+
                         </div>
                     </div>
                     </a>

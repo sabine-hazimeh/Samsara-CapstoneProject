@@ -13,33 +13,17 @@
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
     <link rel="stylesheet" th:href="@{/css/custom.min.css}" />
     <link rel="stylesheet" th:href="@{/fonts/FontAwesome.otf}" />
-<!--    <script src="/js/jquery-migrate-1.4.1.min.js"></script>-->
-<!--    <script src="/js/bootstrap.bundle.min.js"></script>-->
-<!--    <script src="/js/flatpickr.min.js"></script>-->
-<!--    <script src="/js/choices.min.js"></script>-->
-<!--    <script src="/js/app.js"></script>-->
-<!--    <script src="/js/feather.min.js"></script>-->
-<!--    <script src="/js/layout.js"></script>-->
-<!--    <script src="/js/lord-icon-2.1.0.js"></script>-->
-<!--    <script src="/js/main.js"></script>-->
-<!--    <script src="/js/map-place.js"></script>-->
-<!--    <script src="/js/plugins.js"></script>-->
-<!--    <script src="/js/popper.min.js"></script>-->
-<!--    <script src="/js/simplebar.min.js"></script>-->
-<!--    <script src="/js/site.js"></script>-->
-<!--    <script src="/js/waves.min.js"></script>-->
 <link  rel="stylesheet" th:href="@{/fonts/iconfont.min.css}">
-
 </head>
 <body>
 <div th:replace="fragment/header :: header"></div>
+
 <div>
     <div id="main-wrapper" >
         <!-- Section start-->
         <div class="hero-section section position-relative">
             <!-- container-->
             <div class="hero-slider section">
-
                 <div class="hero-item" th:style="'background-image: url(http://drive.google.com/uc?export=view&id=1zVqU3fffVSPX6vuCKVsqr8v7qbSgTl1m)'">
                     <div class="container">
                         <div class="row">
@@ -177,14 +161,13 @@
             <div class="container">
 
                 <div class="row">
-
                     <div class="single-fact col-lg-3 col-6 mb-30">
                         <div class="inner">
                             <div class="head">
                                 <i class="pe-7s-home"></i>
-                                <h3 class="counter">854</h3>
+                                <h3 class="counter" th:text="${availablePostCount}"></h3>
                             </div>
-                            <p>Complete Project</p>
+                            <p>Properties Available</p>
                         </div>
                     </div>
 
@@ -192,7 +175,7 @@
                         <div class="inner">
                             <div class="head">
                                 <i class="pe-7s-graph3"></i>
-                                <h3 class="counter">854</h3>
+                                <h3 class="counter" th:text="${unavailablePostCount}">0</h3>
                             </div>
                             <p>Property Sold</p>
                         </div>
@@ -202,7 +185,7 @@
                         <div class="inner">
                             <div class="head">
                                 <i class="pe-7s-users"></i>
-                                <h3 class="counter">854</h3>
+                                <h3 class="counter" th:text="${clientCount}"></h3>
                             </div>
                             <p>Happy Clients</p>
                         </div>
@@ -212,7 +195,7 @@
                         <div class="inner">
                             <div class="head">
                                 <i class="pe-7s-medal"></i>
-                                <h3 class="counter">854</h3>
+                                <h3 class="counter">80</h3>
                             </div>
                             <p>Awards Win</p>
                         </div>
@@ -279,26 +262,27 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
 <script>
     $(document).ready(function(){
-        // Initialize Slick slider
-        $('.hero-slider').slick({
-            slidesToShow: 1, // Display one slide at a time
-            slidesToScroll: 1, // Scroll one slide at a time
-            infinite: true,
-            fade: true, // Enable fade effect between slides
-            dots: false,
-            prevArrow: '<button class="slick-prev"><i class="fa fa-angle-left"></i></button>',
-            nextArrow: '<button class="slick-next"><i class="fa fa-angle-right"></i></button>',
-            responsive: [
-                {
-                    breakpoint: 992,
-                    settings: {
-                        dots: true,
-                        arrows: false,
-                    }
-                },
-            ]
-        });
+    // Initialize Slick slider
+    $('.hero-slider').slick({
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        infinite: true,
+        dots: false,
+         adaptiveHeight: true,
+        prevArrow: '<button class="slick-prev"><i class="fa fa-angle-left"></i></button>',
+        nextArrow: '<button class="slick-next"><i class="fa fa-angle-right"></i></button>',
+        responsive: [
+            {
+                breakpoint: 992,
+                settings: {
+                    dots: true,
+                    arrows: false,
+                    adaptiveHeight: true,
+                }
+            },
+        ]
     });
+});
 </script>
 
 </body>

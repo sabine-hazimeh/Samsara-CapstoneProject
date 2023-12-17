@@ -1,11 +1,9 @@
 package com.Samsara.Capstone.Project.Controller;
 
 import com.Samsara.Capstone.Project.Model.Client;
-import com.Samsara.Capstone.Project.Model.Post;
 import com.Samsara.Capstone.Project.Security.UserInfoDetails;
 import com.Samsara.Capstone.Project.Service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -15,7 +13,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.List;
 
 @RequestMapping("/client")
 @Controller

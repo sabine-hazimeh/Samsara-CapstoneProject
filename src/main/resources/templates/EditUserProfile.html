@@ -1,8 +1,99 @@
+<!--<!DOCTYPE html>-->
+<!--<html lang="en" xmlns:th="http://www.thymeleaf.org">-->
+
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1.0">-->
+<!--    <title>User Profile</title>-->
+<!--    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">-->
+<!--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">-->
+<!--    <link rel="stylesheet"  th:href="@{/css/style.css}" />-->
+<!--    <link rel="stylesheet"  th:href="@{/css/site.css}" />-->
+<!--    <link rel="stylesheet" th:href="@{/css/helper.css}" />-->
+<!--    <link rel="stylesheet" th:href="@{/css/plugins.css}" />-->
+<!--    <link rel="stylesheet" th:href="@{/css/app.min.css}" />-->
+<!--    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />-->
+<!--    <link rel="stylesheet" th:href="@{/css/custom.min.css}" />-->
+<!--    <link rel="stylesheet" th:href="@{/fonts/FontAwesome.otf}" />-->
+<!--    <style>-->
+<!--        /* Add your custom CSS styles here */-->
+<!--        .profile-image {-->
+<!--            width: 150px;-->
+<!--            height: 150px;-->
+<!--            border-radius: 50%;-->
+<!--            object-fit: cover;-->
+<!--        }-->
+
+
+<!--    </style>-->
+<!--</head>-->
+
+<!--<body>-->
+<!--<div th:replace="fragment/header :: header"></div>-->
+<!--<div class="container mt-5">-->
+<!--    <div class="row">-->
+<!--        <div class="col-md-12 mb-60 mb-xs-30">-->
+<!--            <div class="section-title center">-->
+<!--                <h1>User Details</h1>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--    <div class="row mt-3">-->
+<!--        <div class="col-md-6 mx-auto">-->
+<!--            <div class="card">-->
+<!--                <div class="card-body">-->
+<!--                    <h5 class="card-title">User Information</h5>-->
+<!--                    <form th:action="@{/client/update-details}" method="post" th:object="${client}" enctype="multipart/form-data">-->
+<!--                        <input type="hidden" id="id" th:field="*{id}" required th:value="${client.id}">-->
+<!--                        <input type="hidden" id="version" th:field="*{version}" required th:value="${client.version}">-->
+<!--&lt;!&ndash;                    <div>&ndash;&gt;-->
+<!--&lt;!&ndash;                        <img class="profile-image" alt="Profile Image" th:src="'data:image/jpeg;base64,' + ${client.profilePhoto}">&ndash;&gt;-->
+<!--&lt;!&ndash;                        <a href="#" id="changeImageLink"><i class="fas fa-pen"></i></a>&ndash;&gt;-->
+<!--&lt;!&ndash;                        <input type="file" id="profileImageInput" style="display: none;">&ndash;&gt;-->
+<!--&lt;!&ndash;                    </div>&ndash;&gt;-->
+<!--                        <div class="mb-3">-->
+<!--                            <label for="files" class="form-label">Images</label>-->
+<!--                            <input type="file" class="form-control" id="files" name="files" accept="image/*" required>-->
+<!--                        </div>-->
+
+<!--                    <input type="text" class="form-control edit-input" id="usernameInput" th:field="*{userName}" th:value="${client.userName}">-->
+
+<!--                    <input type="text" class="form-control edit-input" id="phoneNbInput" th:field="*{phoneNumber}" th:value="${client.phoneNumber}">-->
+
+<!--                    <input type="text" class="form-control edit-input" id="emailInput"  th:field="*{email}" th:value="${client.email}">-->
+
+<!--                    <input type="text" class="form-control edit-input" id="passwordInput" th:field="*{password}" th:value="${client.password}">-->
+<!--                        <div class="mb-3">-->
+<!--                            <button type="submit" class="btn btn-primary mb-3">Update Information</button>-->
+<!--                        </div>-->
+<!--                    </form>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+
+<!--<div th:replace="fragment/footer :: footer"></div>-->
+
+<!--<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>-->
+<!--<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>-->
+<!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>-->
+<!--<script>-->
+<!--    // JavaScript to handle profile image change-->
+<!--    document.getElementById('changeImageLink').addEventListener('click', function () {-->
+<!--        document.getElementById('profileImageInput').click();-->
+<!--    });-->
+
+<!--    // Show file input when the change image link is clicked-->
+<!--    document.getElementById('changeImageLink').addEventListener('click', function () {-->
+<!--        document.getElementById('profileImageInput').style.display = 'block';-->
+<!--    });-->
+<!--</script>-->
+<!--</body>-->
+<!--</html>-->
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-
-<head>
-    <meta charset="UTF-8">
+<meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Profile</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
@@ -15,6 +106,8 @@
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
     <link rel="stylesheet" th:href="@{/css/custom.min.css}" />
     <link rel="stylesheet" th:href="@{/fonts/FontAwesome.otf}" />
+<head>
+    <!-- Your meta tags, title, and CSS links -->
     <style>
         /* Add your custom CSS styles here */
         .profile-image {
@@ -24,47 +117,78 @@
             object-fit: cover;
         }
 
-
+        .form-label {
+            font-weight: bold;
+        }
+        .bt{
+    width: auto;
+    background-color: rgb(0, 67, 149);
+    color: rgb(249, 195, 34);
+    text-transform: uppercase;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 30px;
+    border-width: initial;
+    border-style: none;
+    border-color: initial;
+    border-radius: 0;
+    border-image: initial;
+    padding: 10px 40px;
+    margin-bottom: 30px;
+    }
+        .bt:hover {
+    background-color: rgb(249, 195, 34);
+    color: rgb(0, 67, 149);
+}
+ .center-button {
+            text-align: center;
+        }
     </style>
 </head>
 
 <body>
 <div th:replace="fragment/header :: header"></div>
 <div class="container mt-5">
-    <div class="row">
-        <div class="col-md-12 mb-60 mb-xs-30">
-            <div class="section-title center">
-                <h1>User Details</h1>
-            </div>
-        </div>
-    </div>
     <div class="row mt-3">
         <div class="col-md-6 mx-auto">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">User Information</h5>
+
                     <form th:action="@{/client/update-details}" method="post" th:object="${client}" enctype="multipart/form-data">
-                        <input type="hidden" id="id" th:field="*{id}" required th:value="${client.id}">
-                        <input type="hidden" id="version" th:field="*{version}" required th:value="${client.version}">
-<!--                    <div>-->
-<!--                        <img class="profile-image" alt="Profile Image" th:src="'data:image/jpeg;base64,' + ${client.profilePhoto}">-->
-<!--                        <a href="#" id="changeImageLink"><i class="fas fa-pen"></i></a>-->
-<!--                        <input type="file" id="profileImageInput" style="display: none;">-->
-<!--                    </div>-->
+                        <!-- Your hidden fields -->
+                        <!-- Profile Image Input Section -->
                         <div class="mb-3">
                             <label for="files" class="form-label">Images</label>
                             <input type="file" class="form-control" id="files" name="files" accept="image/*" required>
                         </div>
 
-                    <input type="text" class="form-control edit-input" id="usernameInput" th:field="*{userName}" th:value="${client.userName}">
-
-                    <input type="text" class="form-control edit-input" id="phoneNbInput" th:field="*{phoneNumber}" th:value="${client.phoneNumber}">
-
-                    <input type="text" class="form-control edit-input" id="emailInput"  th:field="*{email}" th:value="${client.email}">
-
-                    <input type="text" class="form-control edit-input" id="passwordInput" th:field="*{password}" th:value="${client.password}">
+                        <!-- Username Input Section -->
                         <div class="mb-3">
-                            <button type="submit" class="btn btn-primary mb-3">Update Information</button>
+                            <label for="usernameInput" class="form-label">Username</label>
+                            <input type="text" class="form-control edit-input" id="usernameInput" th:field="*{userName}" th:value="${client.userName}">
+                        </div>
+
+                        <!-- Phone Number Input Section -->
+                        <div class="mb-3">
+                            <label for="phoneNbInput" class="form-label">Phone Number</label>
+                            <input type="text" class="form-control edit-input" id="phoneNbInput" th:field="*{phoneNumber}" th:value="${client.phoneNumber}">
+                        </div>
+
+                        <!-- Email Input Section -->
+                        <div class="mb-3">
+                            <label for="emailInput" class="form-label">Email</label>
+                            <input type="text" class="form-control edit-input" id="emailInput" th:field="*{email}" th:value="${client.email}">
+                        </div>
+
+                        <!-- Password Input Section -->
+                        <div class="mb-3">
+                            <label for="passwordInput" class="form-label">Password</label>
+                            <input type="password" class="form-control edit-input" id="passwordInput" th:field="*{password}" th:value="${client.password}">
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="mb-3 center-button">
+                            <button type="submit" class="btn bt">Update Information</button>
                         </div>
                     </form>
                 </div>

@@ -64,5 +64,13 @@ public class Post {
 		this.reports = new ArrayList<>();
 		this.available = true;
 	}
+	public double calculateAverageRating() {
+		if (reviews == null || reviews.isEmpty()) {
+			return 0.0;
+		}
+
+		double averageRating = reviews.stream().mapToInt(Review::getRate).average().orElse(0.0);
+		return averageRating;
+	}
 
 }

@@ -34,7 +34,12 @@ public class PostController {
 
     @GetMapping(value = "/view-post-Detail/{ID}")
     public String viewDetails(@PathVariable Long ID, Model model) {
-        model.addAttribute("post", getPostById(ID));
+        Post post = getPostById(ID);
+
+        // Calculate average rating for the post
+        double averageRating = post.calculateAverageRating();
+        model.addAttribute("post", post);
+        model.addAttribute("averageRating", averageRating);
         model.addAttribute("review", new Review());
         model.addAttribute("report", new Report());
         return "PostDetails";

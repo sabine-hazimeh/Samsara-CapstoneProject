@@ -564,8 +564,7 @@ form input[type=checkbox], form input[type=radio] {
   transform: translateY(-50%);
 }
 form textarea {
-  width: 100%;
-  border: 1px solid #eeeeee;
+  border: 1px solid rgb(0, 67, 149);
   background-color: transparent;
   line-height: 30px;
   padding: 9px 20px;
@@ -573,6 +572,7 @@ form textarea {
   font-size: 15px;
   border-radius: 0;
   height: 120px;
+  width:100%;
 }
 form .nice-select {
   width: 100%;
@@ -721,11 +721,11 @@ form .dropzone .dz-preview .dz-image {
 /*----------------------------------------*/
 header.header {
   background-color: #ffffff;
-  position: absolute;
+
   left: 0;
   top: 0;
   width: 100%;
-  z-index: 9999;
+
 }
 header.header.is-sticky {
   position: fixed;
@@ -1172,19 +1172,6 @@ header.header.is-sticky {
 /*----------------------------------------*/
 /*  03. Hero CSS
 /*----------------------------------------*/
-.hero-section {
-  margin-top: 91px;
-}
-@media only screen and (min-width: 768px) and (max-width: 991px) {
-  .hero-section {
-    margin-top: 81px;
-  }
-}
-@media only screen and (max-width: 767px) {
-  .hero-section {
-    margin-top: 81px;
-  }
-}
 .hero-section .inline-YTPlayer {
   width: 100% !important;
 }

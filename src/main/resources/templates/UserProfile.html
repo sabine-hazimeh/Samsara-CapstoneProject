@@ -25,27 +25,60 @@
             object-fit: cover; /* Keeps the aspect ratio of the image */
             object-position: center top; /* Positions the image at the top center */
         }
+        .bt{
+    width: auto;
+    background-color: rgb(0, 67, 149);
+    color: rgb(249, 195, 34);
+    text-transform: uppercase;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 30px;
+    border-width: initial;
+    border-style: none;
+    border-color: initial;
+    border-radius: 0;
+    border-image: initial;
+    padding: 10px 40px;
+    margin-bottom: 30px;
+     margin-left: auto;
+            margin-right: auto;
+            display: block;
+    }
+     .center-button {
+            text-align: center;
+        }
+
+        .bt:hover {
+    background-color: rgb(249, 195, 34);
+    color: rgb(0, 67, 149);
+}
+        .info-label {
+            font-weight: bold;
+            font-size: 20px;
+        }
+
     </style>
 </head>
 <body>
 <div th:replace="fragment/header :: header"></div>
 <div class="container mt-5">
-    <h1>User Profile</h1>
     <div class="row mt-3">
         <div class="col-md-6 mx-auto">
             <div class="card">
                 <div class="card-body">
-                    <h5 class="card-title">User Information</h5>
+                    <h5 class="card-title center-button" style="font-size:20px;">User Information</h5>
                     <div>
                         <img alt="" th:src="'data:image/jpeg;base64,' + ${client.profilePhoto}"
                              class="profile-image">
                     </div>
-                    <p th:text="'Username: ' + ${client.userName}"></p>
-                    <p th:text="'Phone Number: ' + ${client.phoneNumber}"></p>
-                    <p th:text="'Email: ' + ${client.email}"></p>
+                    <p><strong class="info-label">Username:</strong> <span th:text="${client.userName}" style="font-size:20px;"></span></p>
+                    <p><strong class="info-label">Phone Number:</strong> <span th:text="${client.phoneNumber}" style="font-size:20px;"></span></p>
+                    <p><strong class="info-label">Email:</strong> <span th:text="${client.email}" style="font-size:20px;"></span></p>
+                    <div class="center-button">
                     <a th:href="@{/client/edit-details}">
-                        <button type="button" class="btn btn-primary btn-lg m-3">Edit information</button>
+                        <button type="button" class="btn bt">Edit information</button>
                     </a>
+                    </div>
                 </div>
             </div>
         </div>

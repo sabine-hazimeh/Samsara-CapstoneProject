@@ -14,11 +14,33 @@
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
     <link rel="stylesheet" th:href="@{/css/custom.min.css}" />
     <link rel="stylesheet" th:href="@{/fonts/FontAwesome.otf}" />
+    <style>
+        .bt{
+    width: auto;
+    background-color: rgb(0, 67, 149);
+    color: rgb(249, 195, 34);
+    text-transform: uppercase;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 30px;
+    border-width: initial;
+    border-style: none;
+    border-color: initial;
+    border-radius: 0;
+    border-image: initial;
+    padding: 10px 40px;
+    margin-bottom: 30px;
+    }
+        .bt:hover {
+    background-color: rgb(249, 195, 34);
+    color: rgb(0, 67, 149);
+}
+    </style>
 </head>
 <body>
 <div th:replace="fragment/header :: header"></div>
 <div class="row">
-    <div class="col-md-12 mb-60 mb-xs-30">
+    <div class="col-md-12 mb-xs-30">
         <div class="section-title center">
             <h1>Please Fill This Form</h1>
         </div>
@@ -49,10 +71,10 @@
     </div>
     <div id="password-match-message" class="text-muted mb-2"></div>
     <div class="mb-3">
-        <label for="files" class="form-label">Profile Picture</label>
+        <label for="files" class="form-label font-weight-bold h5">Profile Picture</label>
         <input type="file" class="form-control" id="files" name="files"  accept="image/*">
     </div>
-    <button type="submit" class="btn btn-primary" id="submitBtn" disabled>Create Account</button>
+    <button type="submit" class="btn bt" id="submitBtn" disabled>Create Account</button>
     <p class="text-center mt-3">
         Already have an account? <a href="/logIn/display-logIn">LogIn</a>
     </p>
@@ -108,52 +130,65 @@
         }
 
         function generateStrengthMessage(criteriaMet) {
-            // Generate HTML for the strength message based on the criteria met
-            var message = "<ul>";
+    // Generate HTML for the strength message based on the criteria met
+    var message = "<div>";
 
-            if (criteriaMet.lowercase) {
-                message += "<li class='text-success'>Password should contain at least one small letter</li>";
-            } else {
-                message += "<li class='text-danger'>Password should contain at least one small letter</li>";
-            }
+    if (criteriaMet.lowercase) {
+        message += "<div class='text-success'>Password should contain at least one small letter</div>";
+    } else {
+        message += "<div class='text-danger'>Password should contain at least one small letter</div>";
+    }
 
-            if (criteriaMet.uppercase) {
-                message += "<li class='text-success'>Password should contain at least one capital letter</li>";
-            } else {
-                message += "<li class='text-danger'>Password should contain at least one capital letter</li>";
-            }
+    if (criteriaMet.uppercase) {
+        message += "<div class='text-success'>Password should contain at least one capital letter</div>";
+    } else {
+        message += "<div class='text-danger'>Password should contain at least one capital letter</div>";
+    }
 
-            if (criteriaMet.digit) {
-                message += "<li class='text-success'>Password should contain numbers</li>";
-            } else {
-                message += "<li class='text-danger'>Password should contain numbers</li>";
-            }
+    if (criteriaMet.digit) {
+        message += "<div class='text-success'>Password should contain numbers</div>";
+    } else {
+        message += "<div class='text-danger'>Password should contain numbers</div>";
+    }
 
-            if (criteriaMet.specialChar) {
-                message += "<li class='text-success'>Password should contain special characters</li>";
-            } else {
-                message += "<li class='text-danger'>Password should contain special characters</li>";
-            }
+    if (criteriaMet.specialChar) {
+        message += "<div class='text-success'>Password should contain special characters</div>";
+    } else {
+        message += "<div class='text-danger'>Password should contain special characters</div>";
+    }
 
-            if (criteriaMet.minLength) {
-                message += "<li class='text-success'>Password length should be greater than 8</li>";
-            } else {
-                message += "<li class='text-danger'>Password length should be greater than 8</li>";
-            }
+    if (criteriaMet.minLength) {
+        message += "<div class='text-success'>Password length should be greater than 8</div>";
+    } else {
+        message += "<div class='text-danger'>Password length should be greater than 8</div>";
+    }
 
-            message += "</ul>";
+    message += "</div>";
 
-            return message;
+    return message;
+}
+
+
+        document.getElementById('confirmPassword').addEventListener('input', function() {
+        var password = document.getElementById('password').value;
+        var confirmPassword = this.value;
+        var matchMessage = document.getElementById('password-match-message');
+
+        if (confirmPassword === '') {
+            matchMessage.innerHTML = ''; // Clear the message if confirm password is empty
+        } else {
+            checkPasswordMatch(password, confirmPassword, matchMessage);
         }
+    });
 
-        function checkPasswordMatch(password, confirmPassword) {
-            // Check if passwords match and display match message
-            if (password === confirmPassword) {
-                matchMessage.innerHTML = "<span class='text-success'>Passwords match</span>";
-            } else {
-                matchMessage.innerHTML = "<span class='text-danger'>Passwords do not match</span>";
-            }
+    function checkPasswordMatch(password, confirmPassword, matchMessage) {
+        // Check if passwords match and display match message
+        if (password === confirmPassword) {
+            matchMessage.innerHTML = "<span class='text-success'>Passwords match</span>";
+        } else {
+            matchMessage.innerHTML = "<span class='text-danger'>Passwords do not match</span>";
         }
+    }
 
         function updateSubmitButton(criteriaMet, password, confirmPassword) {
             // Enable or disable the submit button based on the criteria and password match

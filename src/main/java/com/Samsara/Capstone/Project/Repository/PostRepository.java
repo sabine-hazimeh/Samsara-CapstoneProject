@@ -17,6 +17,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     List<Post> findByLocationAndDeleted(String location, boolean deleted);
     List<Post> findByBedroomNbAndDeleted(Integer bedroomNb, boolean deleted);
     List<Post> findByBathroomNbAndDeleted(Integer bathroomNb, boolean deleted);
-
-
+    long count();
+    long countByAvailableFalse();
+    long countByAvailableTrue();
 }
