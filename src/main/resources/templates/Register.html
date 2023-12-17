@@ -74,7 +74,7 @@
         <label for="files" class="form-label font-weight-bold h5">Profile Picture</label>
         <input type="file" class="form-control" id="files" name="files"  accept="image/*">
     </div>
-    <button type="submit" class="btn bt" id="submitBtn" disabled>Create Account</button>
+    <button type="submit" class="btn bt" id="submitBtn">Create Account</button>
     <p class="text-center mt-3">
         Already have an account? <a href="/logIn/display-logIn">LogIn</a>
     </p>
@@ -84,6 +84,113 @@
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<!--<script>-->
+<!--    document.addEventListener("DOMContentLoaded", function () {-->
+<!--        var passwordInput = document.getElementById("password");-->
+<!--        var confirmPasswordInput = document.getElementById("confirmPassword");-->
+<!--        var strengthMessage = document.getElementById("password-strength-message");-->
+<!--        var matchMessage = document.getElementById("password-match-message");-->
+<!--        var submitButton = document.getElementById("submitBtn");-->
+
+<!--        // Event listener for password input-->
+<!--        passwordInput.addEventListener("input", function () {-->
+<!--            var password = passwordInput.value;-->
+<!--            var criteriaMet = checkPasswordCriteria(password);-->
+
+<!--            // Update the strength message based on the criteria-->
+<!--            strengthMessage.innerHTML = generateStrengthMessage(criteriaMet);-->
+
+<!--            // Check if passwords match and display match message-->
+<!--            checkPasswordMatch(password, confirmPasswordInput.value);-->
+
+<!--            // Enable or disable the submit button based on the criteria and password match-->
+<!--            updateSubmitButton(criteriaMet, password, confirmPasswordInput.value);-->
+<!--        });-->
+
+<!--        // Event listener for confirm password input-->
+<!--        confirmPasswordInput.addEventListener("input", function () {-->
+<!--            // Check if passwords match and display match message-->
+<!--            checkPasswordMatch(passwordInput.value, confirmPasswordInput.value);-->
+
+<!--            // Enable or disable the submit button based on the criteria and password match-->
+<!--            updateSubmitButton(checkPasswordCriteria(passwordInput.value), passwordInput.value, confirmPasswordInput.value);-->
+<!--        });-->
+
+<!--        function checkPasswordCriteria(password) {-->
+<!--            // Check the criteria and return an object indicating which criteria are met-->
+<!--            var criteria = {-->
+<!--                lowercase: /[a-z]/.test(password),-->
+<!--                uppercase: /[A-Z]/.test(password),-->
+<!--                digit: /\d/.test(password),-->
+<!--                specialChar: /[!@#$%^&*(),.?":{}|<>]/.test(password),-->
+<!--                minLength: password.length >= 8,-->
+<!--            };-->
+
+<!--            return criteria;-->
+<!--        }-->
+
+<!--        function generateStrengthMessage(criteriaMet) {-->
+<!--    // Generate HTML for the strength message based on the criteria met-->
+<!--    var message = "<div>";-->
+
+<!--    if (criteriaMet.lowercase) {-->
+<!--        message += "<div class='text-success'>Password should contain at least one small letter</div>";-->
+<!--    } else {-->
+<!--        message += "<div class='text-danger'>Password should contain at least one small letter</div>";-->
+<!--    }-->
+
+<!--    if (criteriaMet.uppercase) {-->
+<!--        message += "<div class='text-success'>Password should contain at least one capital letter</div>";-->
+<!--    } else {-->
+<!--        message += "<div class='text-danger'>Password should contain at least one capital letter</div>";-->
+<!--    }-->
+
+<!--    if (criteriaMet.digit) {-->
+<!--        message += "<div class='text-success'>Password should contain numbers</div>";-->
+<!--    } else {-->
+<!--        message += "<div class='text-danger'>Password should contain numbers</div>";-->
+<!--    }-->
+
+<!--    if (criteriaMet.specialChar) {-->
+<!--        message += "<div class='text-success'>Password should contain special characters</div>";-->
+<!--    } else {-->
+<!--        message += "<div class='text-danger'>Password should contain special characters</div>";-->
+<!--    }-->
+
+<!--    if (criteriaMet.minLength) {-->
+<!--        message += "<div class='text-success'>Password length should be greater than 8</div>";-->
+<!--    } else {-->
+<!--        message += "<div class='text-danger'>Password length should be greater than 8</div>";-->
+<!--    }-->
+
+<!--    message += "</div>";-->
+
+<!--    return message;-->
+<!--}-->
+
+
+<!--        document.getElementById('confirmPassword').addEventListener('input', function() {-->
+<!--        var password = document.getElementById('password').value;-->
+<!--        var confirmPassword = this.value;-->
+<!--        var matchMessage = document.getElementById('password-match-message');-->
+
+<!--        if (confirmPassword === '') {-->
+<!--            matchMessage.innerHTML = ''; // Clear the message if confirm password is empty-->
+<!--        } else {-->
+<!--            checkPasswordMatch(password, confirmPassword, matchMessage);-->
+<!--        }-->
+<!--    });-->
+
+<!--    function checkPasswordMatch(password, confirmPassword, matchMessage) {-->
+<!--        // Check if passwords match and display match message-->
+<!--        if (password === confirmPassword) {-->
+<!--            matchMessage.innerHTML = "<span class='text-success'>Passwords match</span>";-->
+<!--        } else {-->
+<!--            matchMessage.innerHTML = "<span class='text-danger'>Passwords do not match</span>";-->
+<!--        }-->
+<!--    }-->
+<!--    });-->
+<!--</script>-->
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         var passwordInput = document.getElementById("password");
@@ -91,6 +198,18 @@
         var strengthMessage = document.getElementById("password-strength-message");
         var matchMessage = document.getElementById("password-match-message");
         var submitButton = document.getElementById("submitBtn");
+
+        // Initially disable the submit button
+        submitButton.disabled = true;
+
+        function updateSubmitButton() {
+            var passwordCriteria = checkPasswordCriteria(passwordInput.value);
+            var passwordsMatch = passwordInput.value === confirmPasswordInput.value;
+
+            // Enable the submit button only if password criteria are met and passwords match
+            submitButton.disabled = !(passwordCriteria.lowercase && passwordCriteria.uppercase && passwordCriteria.digit &&
+                passwordCriteria.specialChar && passwordCriteria.minLength && passwordsMatch);
+        }
 
         // Event listener for password input
         passwordInput.addEventListener("input", function () {
@@ -104,7 +223,7 @@
             checkPasswordMatch(password, confirmPasswordInput.value);
 
             // Enable or disable the submit button based on the criteria and password match
-            updateSubmitButton(criteriaMet, password, confirmPasswordInput.value);
+            updateSubmitButton();
         });
 
         // Event listener for confirm password input
@@ -113,7 +232,7 @@
             checkPasswordMatch(passwordInput.value, confirmPasswordInput.value);
 
             // Enable or disable the submit button based on the criteria and password match
-            updateSubmitButton(checkPasswordCriteria(passwordInput.value), passwordInput.value, confirmPasswordInput.value);
+            updateSubmitButton();
         });
 
         function checkPasswordCriteria(password) {
@@ -129,9 +248,9 @@
             return criteria;
         }
 
+        // Function to generate the strength message based on criteria met
         function generateStrengthMessage(criteriaMet) {
-    // Generate HTML for the strength message based on the criteria met
-    var message = "<div>";
+             var message = "<div>";
 
     if (criteriaMet.lowercase) {
         message += "<div class='text-success'>Password should contain at least one small letter</div>";
@@ -166,46 +285,19 @@
     message += "</div>";
 
     return message;
-}
-
-
-        document.getElementById('confirmPassword').addEventListener('input', function() {
-        var password = document.getElementById('password').value;
-        var confirmPassword = this.value;
-        var matchMessage = document.getElementById('password-match-message');
-
-        if (confirmPassword === '') {
-            matchMessage.innerHTML = ''; // Clear the message if confirm password is empty
-        } else {
-            checkPasswordMatch(password, confirmPassword, matchMessage);
         }
-    });
 
-    function checkPasswordMatch(password, confirmPassword, matchMessage) {
-        // Check if passwords match and display match message
-        if (password === confirmPassword) {
-            matchMessage.innerHTML = "<span class='text-success'>Passwords match</span>";
-        } else {
-            matchMessage.innerHTML = "<span class='text-danger'>Passwords do not match</span>";
-        }
-    }
-
-        function updateSubmitButton(criteriaMet, password, confirmPassword) {
-            // Enable or disable the submit button based on the criteria and password match
-            if (
-                criteriaMet.lowercase &&
-                criteriaMet.uppercase &&
-                criteriaMet.digit &&
-                criteriaMet.specialChar &&
-                criteriaMet.minLength &&
-                password === confirmPassword
-            ) {
-                submitButton.removeAttribute("disabled");
+       function checkPasswordMatch(password, confirmPassword) {
+            // Check if passwords match and display match message
+            if (confirmPassword !== '' && password !== confirmPassword) {
+                matchMessage.innerHTML = "<span class='text-danger'>Passwords do not match</span>";
             } else {
-                submitButton.setAttribute("disabled", "disabled");
+                matchMessage.innerHTML = '';
             }
+
         }
     });
 </script>
+
 </body>
 </html>

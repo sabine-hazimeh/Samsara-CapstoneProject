@@ -185,9 +185,11 @@
                     <li>Check and inspect the product properly before purchasing it.</li><br>
                     <li>Never pay anything in advance or transfer money before inspecting the product.</li>
                 </ul>
-                <button id="reportBtn" onclick="toggleReportModal()" class="bt">Report post</button>
-
                 <!-- Modal for reporting post -->
+                <!-- This could be a button in your post or a link that triggers the report modal -->
+                <button class="bt" onclick="openReportModal()">Report Post</button>
+
+                <!-- Your existing modal code -->
                 <div id="reportModal" class="modal">
                     <div class="modal-content">
                         <span class="close" onclick="closeReportModal()">&times;</span>
@@ -201,6 +203,7 @@
                         </form>
                     </div>
                 </div>
+
             </div>
         </div>
 
@@ -309,9 +312,6 @@
                 <span th:each="star : ${#numbers.sequence(1, 5)}"
                       th:class="${averageRating >= star ? 'fas fa-star' : 'far fa-star'}"</span>
             </div>
-
-
-
             <div class="row mt-4">
                 <!-- Existing Reviews -->
                 <div class="col-lg-5">
@@ -334,15 +334,15 @@
                             <h2>Rate the post</h2>
                             <div class="star-widget">
                                 <input type="radio" name="rate" th:field="*{rate}" id="rate-5" value="5">
-                                                    <label for="rate-5" class="fas fa-star"></label>
-                                                    <input type="radio" name="rate" id="rate-4" th:field="*{rate}" value="4">
-                                                    <label for="rate-4" class="fas fa-star"></label>
-                                                    <input type="radio" name="rate" id="rate-3" th:field="*{rate}" value="3">
-                                                    <label for="rate-3" class="fas fa-star"></label>
-                                                    <input type="radio" name="rate" id="rate-2" th:field="*{rate}" value="2">
-                                                    <label for="rate-2" class="fas fa-star"></label>
-                                                    <input type="radio" name="rate" id="rate-1" th:field="*{rate}" value="1">
-                                                    <label for="rate-1" class="fas fa-star"></label>
+                                <label for="rate-5" class="fas fa-star"></label>
+                                <input type="radio" name="rate" id="rate-4" th:field="*{rate}" value="4">
+                                <label for="rate-4" class="fas fa-star"></label>
+                                <input type="radio" name="rate" id="rate-3" th:field="*{rate}" value="3">
+                                <label for="rate-3" class="fas fa-star"></label>
+                                <input type="radio" name="rate" id="rate-2" th:field="*{rate}" value="2">
+                                <label for="rate-2" class="fas fa-star"></label>
+                                <input type="radio" name="rate" id="rate-1" th:field="*{rate}" value="1">
+                                <label for="rate-1" class="fas fa-star"></label>
                             </div>
                             <div class="textarea">
                                 <textarea cols="30" th:field="*{description}" id="description" placeholder="Describe your experience.." required></textarea><br>
@@ -410,41 +410,16 @@
         });
     }
     // Function to open the report modal
-function toggleReportModal() {
-  var modal = document.getElementById("reportModal");
-  modal.style.display = "block";
+function openReportModal() {
+    var modal = document.getElementById('reportModal');
+    modal.style.display = 'block';
 }
 
 // Function to close the report modal
 function closeReportModal() {
-  var modal = document.getElementById("reportModal");
-  modal.style.display = "none";
+    var modal = document.getElementById('reportModal');
+    modal.style.display = 'none';
 }
-
-// Function to submit the report form (optional)
-document.getElementById("reportForm").addEventListener("submit", function(event) {
-  // You can add AJAX call or any other logic to handle form submission
-  event.preventDefault(); // Prevents the default form submission
-  closeReportModal(); // Close the modal after submission (if needed)
-});
-document.getElementById("reportForm").addEventListener("submit", function(event) {
-  event.preventDefault(); // Prevent default form submission
-  var formData = new FormData(this); // Get form data
-
-  fetch(this.action, {
-    method: this.method,
-    body: formData
-  })
-  .then(response => {
-    // Handle the response or perform actions on successful submission
-    console.log("Report submitted successfully");
-    closeReportModal(); // Close the modal after submission
-  })
-  .catch(error => {
-    // Handle errors if the submission fails
-    console.error("Error submitting report:", error);
-  });
-});
 
 </script>
 <!--<script type="text/javascript">-->
