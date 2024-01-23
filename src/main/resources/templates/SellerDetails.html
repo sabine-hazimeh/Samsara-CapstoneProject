@@ -13,15 +13,34 @@
         <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
         <link rel="stylesheet" th:href="@{/css/custom.min.css}" />
         <link rel="stylesheet" th:href="@{/fonts/FontAwesome.otf}" />
-
+    <link  rel="stylesheet" th:href="@{/fonts/iconfont.min.css}">
+    <style>
+        .default-user-icon {
+         position: absolute;
+         top: 50%;
+         left: 50%;
+         transform: translate(-50%, -50%);
+         font-size: 40px; /* Adjust size */
+         }
+    </style>
 </head>
 <body>
 <div th:replace="fragment/header :: header"></div>
 <div class="container seller-details-container">
     <div class="seller-details">
+<!--        <div class="profile-photo">-->
+<!--            <img alt=""th:src="'data:image/jpeg;base64,' + ${Client.profilePhoto}">-->
+<!--        </div>-->
+
         <div class="profile-photo">
-            <img alt="" th:src="'data:image/jpeg;base64,' + ${Client.profilePhoto}">
+    <span th:if="${Client.profilePhoto == null or Client.profilePhoto.isEmpty()}"
+          class="default-user-icon">
+        <i class="fas fa-user"></i>
+    </span>
+            <img alt="" th:unless="${Client.profilePhoto == null or Client.profilePhoto.isEmpty()}"
+                 th:src="'data:image/jpeg;base64,' + ${Client.profilePhoto}">
         </div>
+
         <div class="contact-details">
             <p>User Name: <span th:text="${Client.userName}"></span></p>
             <p>Phone Number: <span th:text="${Client.phoneNumber}"></span></p>

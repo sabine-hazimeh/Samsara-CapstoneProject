@@ -41,11 +41,11 @@ public class SecurityConfig{
 
         return httpSecurity.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> {
-
-                    auth.requestMatchers("/static/**", "/home/**", "/css/**", "/fonts/**", "/Post/**", "/logIn/**", "/Register/**", "/login/**", "/images/**", "/search/**", "/post/{postId}/image", "/js/**","/favicon.ico","/error").permitAll();
-                    auth.requestMatchers("/cart/**", "/Admin/**", "/wish/**", "/post/**", "/review/**", "/Employee/**","/client/**").authenticated();
+                    auth.requestMatchers("/static/**", "/home/**", "/css/**", "/fonts/**", "/Post/**", "/logIn/**", "/Register/**",
+                            "/login/**", "/images/**", "/search/**", "/post/{postId}/image", "/js/**","/favicon.ico","/error","/user/**").permitAll();
+                    auth.requestMatchers("/cart/**", "/Admin/**", "/wish/**", "/post/**", "/review/**",
+                            "/Employee/**","/client/**","/predict/**").authenticated();
                 })
-
                 .formLogin(login -> {
                     login.loginPage("/logIn/display-logIn")
                             .loginProcessingUrl("/login")

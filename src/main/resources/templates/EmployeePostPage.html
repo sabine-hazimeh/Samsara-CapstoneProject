@@ -12,6 +12,7 @@
     <link rel="stylesheet" th:href="@{/css/app.min.css}" />
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
     <link rel="stylesheet" th:href="@{/css/custom.min.css}" />
+    <link  rel="stylesheet" th:href="@{/fonts/iconfont.min.css}">
     <style>
         #sortByStatus,
         #sortByPrice {
@@ -75,32 +76,26 @@
      margin-bottom: 30px;
 
      }
+
     </style>
 </head>
 <body>
 <div th:replace="fragment/header :: header"></div>
 <div id="main-wrapper">
 
-    <!--Search Section start-->
+
     <div class="search-section section pt-100 pt-lg-80 pt-md-70 pt-sm-60 pt-xs-50 pb-100 pb-lg-80 pb-md-70 pb-sm-60 pb-xs-50">
         <div class="container">
 
-            <!--Section Title start-->
-            <div class="row">
-                <div class="col-md-12 mb-60 mb-xs-30">
-                    <div class="section-title center">
-                        <h1>Find Your Home</h1>
-                    </div>
-                </div>
-            </div>
-            <!--Section Title end-->
-            <a th:href="@{/post/add-post}">
-                <button type="button" style="color:#E8B524" class="btn bt btn-lg m-3">Add Apartment</button>
+            <a th:href="@{/Employee/display-reports}">
+                <button type="button" style="color:#E8B524" class="btn bt btn-lg m-3">View Reports</button>
+            </a>
+            <a th:href="@{/Employee/display-Register}">
+                <button type="button" style="color:#E8B524" class="btn bt btn-lg m-3">Create Account</button>
             </a>
             <div class="row">
                 <div class="col">
 
-                    <!--Property Search start-->
                     <div class="property-search">
 
                         <form action="#" th:action="@{/search/posts}" method="get">
@@ -124,8 +119,16 @@
                     </div>
                 </div>
                 <!--Property Search end-->
+
             </div>
+<!--            <a th:href="@{/Employee/display-reports}">-->
+<!--                <button type="button" style="color:#E8B524" class="btn bt btn-lg m-3">View Reports</button>-->
+<!--            </a>-->
+<!--            <a th:href="@{/Employee/display-Register}">-->
+<!--                <button type="button" style="color:#E8B524" class="btn bt btn-lg m-3">Create Account</button>-->
+<!--            </a>-->
         </div>
+
     </div>
 
 
@@ -135,29 +138,13 @@
 <!--New property section start-->
 <div class="property-section section pb-60 pb-lg-40 pb-md-30 pb-sm-20 pb-xs-10">
     <div class="container">
-
-        <!--Section Title start-->
-        <div class="row">
-            <div class="col-md-12 mb-60 mb-xs-30">
-                <div class="section-title center">
-                    <h1>Search results</h1>
-                </div>
-            </div>
-        </div>
-        <!--            Section Title end-->
-
         <div class="row">
             <!-- Iterate over the list of Apartments -->
             <div th:each="post : ${posts}" class="property-item mb-40 col-4"  th:classappend="${!post.available} ? 'sold-out' : ''">
                 <a th:href="@{/Post/view-post-Detail/{ID}(ID=${post.id})}">
                     <div class="property-inner ">
                         <div class="image">
-                            <div th:each="image : ${post.images}">
-                                <td>
-                                    <img alt="" th:src="'data:image/jpeg;base64,' + ${image.image}">
-                                </td>
-                            </div>
-
+                            <img alt="" th:src="'data:image/jpeg;base64,' + ${post.images[0].image}">
 
                             <ul class="property-feature">
                                 <li>
@@ -184,7 +171,13 @@
                                             <i class="fas fa-trash"></i>
                                         </button>
                                     </form>
+<!--                                    <input type="checkbox" id="checkbox_${post.id}" class="checkbox-input" style="display: none;" />-->
+<!--                                    <label for="checkbox_${post.id}" class="checkbox-icon">-->
+<!--                                        <i class="far fa-square" style="font-size: 25px;"></i>-->
+<!--                                        <i class="far fa-check-square" style="display: none; font-size: 25px;"></i>-->
+<!--                                    </label>-->
                                 </div>
+
                             </div>
                             <div class="right">
                                 <div class="type-wrap">
@@ -292,6 +285,26 @@ $(document).ready(function () {
         });
     });
 });
+<!--// JavaScript to handle checkbox toggle behavior-->
+<!--$(document).ready(function () {-->
+<!--    $('.checkbox-icon').on('click', function () {-->
+<!--        var checkbox = $(this).prev('.checkbox-input');-->
+<!--        checkbox.prop('checked', !checkbox.prop('checked'));-->
+
+<!--        var checkedIcon = $(this).find('.fa-check-square');-->
+<!--        var uncheckedIcon = $(this).find('.fa-square');-->
+
+<!--        if (checkbox.prop('checked')) {-->
+<!--            checkedIcon.css('display', 'inline-block');-->
+<!--            uncheckedIcon.css('display', 'none');-->
+<!--            // Perform actions when the checkbox is checked-->
+<!--        } else {-->
+<!--            checkedIcon.css('display', 'none');-->
+<!--            uncheckedIcon.css('display', 'inline-block');-->
+<!--            // Perform actions when the checkbox is unchecked-->
+<!--        }-->
+<!--    });-->
+<!--});-->
 
 </script>
 

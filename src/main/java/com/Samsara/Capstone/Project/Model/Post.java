@@ -35,8 +35,8 @@ public class Post {
 	private int floor;
 	private int buildingFloorNb;
 	private String description;
-	private long longitude;
-	private long altitude;
+	private double longitude;
+	private double altitude;
 	private String location;
 	private boolean deleted;
 	@OneToMany
@@ -68,7 +68,6 @@ public class Post {
 		if (reviews == null || reviews.isEmpty()) {
 			return 0.0;
 		}
-
 		double averageRating = reviews.stream().mapToInt(Review::getRate).average().orElse(0.0);
 		return averageRating;
 	}

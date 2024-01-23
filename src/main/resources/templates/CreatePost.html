@@ -13,6 +13,7 @@
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
     <link rel="stylesheet" th:href="@{/css/custom.min.css}" />
     <link rel="stylesheet" th:href="@{/fonts/FontAwesome.otf}" />
+    <link  rel="stylesheet" th:href="@{/fonts/iconfont.min.css}">
     <style>
         .bt{
     width: auto;
@@ -39,13 +40,6 @@
 </head>
 <body>
 <div th:replace="fragment/header :: header"></div>
-<div class="row">
-    <div class="col-md-12 mb-60 mb-xs-30">
-        <div class="section-title center">
-            <h1>Apartment Details</h1>
-        </div>
-    </div>
-</div>
 
 <div class="section-title center">
     <h1>Please fill the below form:</h1>
@@ -135,29 +129,26 @@
         <!-- Longitude -->
         <div class="mb-3">
             <label for="longitude" class="form-label">Longitude</label>
-            <input type="number" class="form-control" id="longitude" th:field="*{longitude}">
+            <input type="text" class="form-control" id="longitude" th:field="*{longitude}">
         </div>
 
         <!-- Altitude -->
         <div class="mb-3">
             <label for="altitude" class="form-label">Altitude</label>
-            <input type="number" class="form-control" id="altitude" th:field="*{altitude}">
+            <input type="text" class="form-control" id="altitude" th:field="*{altitude}">
         </div>
-
         <!-- Submit Button -->
         <div class="mb-3">
             <button type="submit" class="btn bt">Create Post</button>
         </div>
     </form>
     <!-- Form to upload an image -->
-
+    <a th:href="@{/post/predict-price}">
+        <button type="button" class="btn bt">Apartment Price Prediction</button>
+    </a>
 </div>
 
 <div th:replace="fragment/footer :: footer"></div>
-
-<script>
-
-</script>
 
 </body>
 </html>

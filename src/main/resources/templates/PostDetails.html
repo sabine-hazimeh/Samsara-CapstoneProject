@@ -13,6 +13,8 @@
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
     <link rel="stylesheet" th:href="@{/css/custom.min.css}" />
     <link rel="stylesheet" th:href="@{/fonts/FontAwesome.otf}" />
+    <link rel="stylesheet" th:href="@{/css/icons.min.css}" />
+    <link  rel="stylesheet" th:href="@{/fonts/iconfont.min.css}">
     <style>
         .bt{
      width: auto;
@@ -46,14 +48,23 @@
      border-radius: 0;
      border-image: initial;
      padding: 10px 40px;
-
-
-     }
+}
 
          .bt:hover {
      background-color: rgb(249, 195, 34);
      color: rgb(0, 67, 149);
  }
+ .stars {
+        color: black; /* Change color as needed */
+    }
+
+<!--    .fas.fa-star {-->
+<!--        font-size: 14px; /* Adjust the size of the stars */-->
+<!--    }-->
+
+    .fas.fa-star.filled {
+        color: gold; /* Filled star color */
+    }
 
          .rating {
              display: flex;
@@ -140,6 +151,29 @@
   cursor: pointer;
 }
 
+.image-slider .slick-prev,
+.image-slider .slick-next {
+    width: 50px;
+    height: 50px;
+    background-color: white;
+    border: 1px solid white;
+    border-radius: 50%;
+    z-index: 1;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 30px;
+    color: #000;
+}
+
+.image-slider .slick-prev {
+    left: 15px;
+}
+
+.image-slider .slick-next {
+    right: 15px;
+}
+
     </style>
 </head>
 <body>
@@ -160,14 +194,14 @@
                 <p class="bedrooms" th:text="${post.bedroomNb}"></p>
                     <div class="mt-3">
                         <a th:href="@{/Post/display-client-details/{postId}(postId=${post.id})}" class="btn bt" method="get">
-                            View Seller Details
+                            Contact Owner Now!!
                         </a>
                     </div>
             </div>
         <div class="col-lg-7 image-slider">
             <div th:each="image : ${post.images}">
                 <td>
-                    <img alt="" th:src="'data:image/jpeg;base64,' + ${image.image}">
+                    <img alt="" th:src="'data:image/jpeg;base64,' + ${image.image}" style="width: 750px; height:500px">
                 </td>
             </div>
         </div>
@@ -181,15 +215,11 @@
             <div>
                 <ul style="font-size: 18px; list-style-type: disc;">
                     <li>Only meet in public / crowded places.</li><br>
-                    <li>Never go alone to meet a buyer / seller, always take someone with you.</li><br>
-                    <li>Check and inspect the product properly before purchasing it.</li><br>
-                    <li>Never pay anything in advance or transfer money before inspecting the product.</li>
+                    <li>Never go alone to meet a seller, always take someone with you.</li><br>
+                    <li>Check and inspect the apartment properly before renting / buying it.</li><br>
+                    <li>Never pay anything in advance or transfer money before inspecting the apartment.</li>
                 </ul>
-                <!-- Modal for reporting post -->
-                <!-- This could be a button in your post or a link that triggers the report modal -->
                 <button class="bt" onclick="openReportModal()">Report Post</button>
-
-                <!-- Your existing modal code -->
                 <div id="reportModal" class="modal">
                     <div class="modal-content">
                         <span class="close" onclick="closeReportModal()">&times;</span>
@@ -304,34 +334,43 @@
 <!--        </form>-->
 <!--    </div>-->
 <!--    </div>-->
-<div class="container">
+<div class="container" >
     <div class="row justify-content-center">
         <div class="col-lg-10 text-center">
             <div class="row d-flex justify-content-center rating star-widget" style="display: flex;">
-                <h3>Average Rating</h3>
+                <h3 th:if="${averageRating == 0}">No rating yet</h3>
+                <h3 th:unless="${averageRating == 0}" >Average Rating</h3>
                 <span th:each="star : ${#numbers.sequence(1, 5)}"
                       th:class="${averageRating >= star ? 'fas fa-star' : 'far fa-star'}"</span>
             </div>
+        </div>
+    </div>
+</div>
+<div class="container mt-4 mb-4" style="border: 1px solid rgb(0, 67, 149);">
             <div class="row mt-4">
-                <!-- Existing Reviews -->
-                <div class="col-lg-5">
+                <div class="col-lg-6"  style=" display: flex;justify-content: center;align-items: center;">
                     <div>
-                    <h2>Existing Reviews</h2>
-                    <div th:if="${post.reviews == null or #lists.isEmpty(post.reviews)}">
-                        <p>No reviews available for this post.</p>
-                    </div>
-                    <div th:each="review : ${post.reviews}" class="review">
-                        <p>Rating: <span th:text="${review.rate}"></span></p>
-                        <p>Description: <span th:text="${review.description}"></span></p>
-                    </div>
+                        <h2>Existing Reviews</h2>
+                        <div th:if="${post.reviews == null or #lists.isEmpty(post.reviews)}">
+                            <p>No reviews available for this post.</p>
+                        </div>
+                        <div th:each="review : ${post.reviews}" class="review">
+                            <p><b><span th:text="${review.client.userName}" ></span></b>
+                                <span class="stars" th:with="rating=${review.rate}">
+                    <i class="fas fa-star" th:each="star : ${#numbers.sequence(1, 5)}"
+                       th:classappend="${star le rating} ? 'filled' : ''" style=" font-size: 14px;"></i>
+                </span>
+                            </p>
+                            <p><span th:text="${review.description}"></span></p>
+                        </div>
                     </div>
                 </div>
 
-                <!-- Post a Review -->
-                <div class="col-lg-5">
+                <div class="col-lg-6"  style=" display: flex;justify-content: center;align-items: center;">
                     <form th:action="@{'/post/add-review/' + ${post.id}}" method="post" th:object="${review}">
                         <div class="RateContainer">
-                            <h2>Rate the post</h2>
+                            <h2 th:if="${post.reviews.isEmpty()}">Be the first one to rate</h2>
+                            <h2 th:unless="${post.reviews.isEmpty()}">Rate the post</h2>
                             <div class="star-widget">
                                 <input type="radio" name="rate" th:field="*{rate}" id="rate-5" value="5">
                                 <label for="rate-5" class="fas fa-star"></label>
@@ -352,8 +391,6 @@
                     </form>
                 </div>
             </div>
-        </div>
-    </div>
 </div>
 
 
@@ -389,49 +426,50 @@
 </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDpNsy_G914FGySWF2cGGYUgWGopEWM57Y&callback=initMap" async defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAyT4g_Ub8gjHwiqD6jnlMO18NYDR06OtM&callback=initMap" async defer></script>
 <script>
-    function initMap() {
-        // Replace these Thymeleaf expressions with actual latitude and longitude values
-        const latitude = [[${post.altitude}]];
-        const longitude = [[${post.longitude}]];
-
-        // Create a map centered at the provided coordinates
-        const map = new google.maps.Map(document.getElementById('map'), {
-            center: { lat: latitude, lng: longitude },
-            zoom: 12 // Adjust the initial zoom level as needed
+    $(document).ready(function(){
+        $('.image-slider').slick({
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            infinite: true,
+            prevArrow: '<button class="slick-prev"><i class="fa fa-angle-left"></i></button>',
+        nextArrow: '<button class="slick-next"><i class="fa fa-angle-right"></i></button>',
         });
+    });
+  function initMap() {
+      // Replace these Thymeleaf expressions with actual latitude and longitude values
+      const latitude = [[${post.altitude}]];
+      const longitude = [[${post.longitude}]];
 
-        // Optionally, add a marker at the specified location
-        const marker = new google.maps.Marker({
-            position: { lat: latitude, lng: longitude },
-            map: map,
-            title: 'Property Location' // Replace with a meaningful title
-        });
-    }
-    // Function to open the report modal
+      // Create a map centered at the provided coordinates
+      const map = new google.maps.Map(document.getElementById('map'), {
+          center: { lat: latitude, lng: longitude },
+          zoom: 12 // Adjust the initial zoom level as needed
+      });
+
+      // Optionally, add a marker at the specified location
+      const marker = new google.maps.Marker({
+          position: { lat: latitude, lng: longitude },
+          map: map,
+          title: 'Property Location' // Replace with a meaningful title
+      });
+  }
+  // Function to open the report modal
 function openReportModal() {
-    var modal = document.getElementById('reportModal');
-    modal.style.display = 'block';
+  var modal = document.getElementById('reportModal');
+  modal.style.display = 'block';
 }
 
 // Function to close the report modal
 function closeReportModal() {
-    var modal = document.getElementById('reportModal');
-    modal.style.display = 'none';
+  var modal = document.getElementById('reportModal');
+  modal.style.display = 'none';
 }
 
 </script>
-<!--<script type="text/javascript">-->
-<!--    function toggleReportTextarea() {-->
-<!--        var reportTextarea = document.getElementById("reportTextarea");-->
-<!--        if (reportTextarea.style.display === "none") {-->
-<!--            reportTextarea.style.display = "block";-->
-<!--        } else {-->
-<!--            reportTextarea.style.display = "none";-->
-<!--        }-->
-<!--    }-->
-<!--</script>-->
+
 <div th:replace="fragment/footer :: footer"></div>
 </body>
 </html>

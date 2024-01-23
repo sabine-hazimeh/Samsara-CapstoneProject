@@ -69,6 +69,11 @@ public class PostAuthController {
         model.addAttribute("watertype", WaterType.values());
         return "CreatePost";
     }
+    @GetMapping(value="/predict-price")
+    public String predictPostPrice(){
+        return "PredictionForm";
+    }
+
 
     @PostMapping(value = "/add-post-to-list")
     @PreAuthorize("hasAnyAuthority('client')")

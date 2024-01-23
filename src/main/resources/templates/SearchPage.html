@@ -12,6 +12,7 @@
     <link rel="stylesheet" th:href="@{/css/app.min.css}" />
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
     <link rel="stylesheet" th:href="@{/css/custom.min.css}" />
+    <link  rel="stylesheet" th:href="@{/fonts/iconfont.min.css}">
     <style>
         .sold-out-label {
     background-color: #405189;
@@ -29,27 +30,25 @@
     opacity: 0.6; /* Reduce opacity for the disabled appearance */
     pointer-events: none; /* Disable pointer events */
 }
+         .wishlist button i {
+                font-size: 24px;
+            }
+        .container2 {
+    text-align: center;
+    margin-bottom: 30px;
+}
     </style>
 </head>
 <body>
 <div th:replace="fragment/header :: header"></div>
-<div class="container">
+<div class="container mt-3">
+    <div th:if="${Post != null and #lists.size(Post) > 0}">
     <div class="row">
-        <div class="col-md-12 mb-4">
-            <h1>Search Results</h1>
-        </div>
-    </div>
-    <div class="row">
-        <div th:each="post : ${post}" class="property-item mb-40 col-4" th:classappend="${!post.available} ? 'sold-out' : ''">
-            <a th:href="@{/post/view-post-Detail/{ID}(ID=${post.id})}">
+        <div th:each="post : ${Post}" class="property-item mb-40 col-4" th:classappend="${!post.available} ? 'sold-out' : ''">
+            <a th:href="@{/Post/view-post-Detail/{ID}(ID=${post.id})}">
                 <div class="property-inner ">
                     <div class="image">
-                        <div th:each="image : ${post.images}">
-                            <td>
-                                <img alt="" th:src="'data:image/jpeg;base64,' + ${image.image}">
-                            </td>
-                        </div>
-
+                        <img alt="" th:src="'data:image/jpeg;base64,' + ${post.images[0].image}">
 
                         <ul class="property-feature">
                             <li>
@@ -70,6 +69,11 @@
                         <div class="left">
                                     <span class="location">
                                         <img src="http://drive.google.com/uc?export=view&id=1HGbxyuvjC1-SSh4Nrbpvx7v_AOb5QhmN" alt="" th:text="${post.location}"></span>
+                            <div class="wishlist p-3">
+                                <form th:action="@{/wish/add/{postId}(postId=${post.id})}" method="post">
+                                    <button type="submit" style="border:none; background: transparent;"><i class="far fa-heart"></i></button>
+                                </form>
+                            </div>
                         </div>
                         <div class="right">
                             <div class="type-wrap">
@@ -80,11 +84,6 @@
                                 <span th:if="${!post.available}" class="sold-out-label">Sold Out</span>
                             </div>
                         </div>
-                        <div class="wishlist">
-                            <form th:action="@{/wish/add/{postId}(postId=${post.id})}" method="post">
-                                <button type="submit" style="border:none; background: transparent;"><i class="far fa-heart"></i></button>
-                            </form>
-                        </div>
                     </div>
                 </div>
             </a>
@@ -92,6 +91,15 @@
     </div>
 
 </div>
+    <div th:unless="${Post != null and #lists.size(Post) > 0}" class="container2">
+            <div class="empty-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="150" height="150" viewBox="0 0 24 24">
+                    <circle cx="12" cy="12" r="10" stroke="#6c757d" stroke-width="2" fill="none" />
+                    <line x1="4" y1="12" x2="20" y2="12" stroke="#6c757d" stroke-width="2" />
+                </svg>
+            </div>
+            <p style="font-weight:bold;">No posts available </p>
+        </div>
 </div>
 
 <div th:replace="fragment/footer :: footer"></div>

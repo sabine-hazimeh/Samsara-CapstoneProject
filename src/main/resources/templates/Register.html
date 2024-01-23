@@ -14,6 +14,7 @@
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
     <link rel="stylesheet" th:href="@{/css/custom.min.css}" />
     <link rel="stylesheet" th:href="@{/fonts/FontAwesome.otf}" />
+    <link  rel="stylesheet" th:href="@{/fonts/iconfont.min.css}">
     <style>
         .bt{
     width: auto;
@@ -48,18 +49,26 @@
 </div>
 
 <form class="m-5 text-center w-50 mx-auto border rounded p-4 border-dark" th:action="@{/Register/create}" method="post" th:object="${Client}" enctype="multipart/form-data">
+    <div th:if="${errorMessage}" class="alert alert-danger">
+        <p th:text="${errorMessage}"></p>
+    </div>
     <div class="mb-3">
         <label for="UserName" class="form-label font-weight-bold h5">UserName</label>
         <input type="text" class="form-control small-input" id="UserName" th:field="*{userName}" required>
+        <small id="username-error" class="text-danger"></small> <!-- Error message placeholder for username -->
     </div>
     <div class="mb-3">
         <label for="PhoneNumber" class="form-label font-weight-bold h5">Phone Number</label>
-        <input type="text" class="form-control small-input" id="PhoneNumber" th:field="*{phoneNumber}" required>
+        <input type="text" class="form-control small-input" id="PhoneNumber" th:field="*{phoneNumber}"  onchange="validatePhoneNumber()" required>
+        <small id="phone-error" class="text-danger"></small>
     </div>
+
     <div class="mb-3">
         <label for="Email" class="form-label font-weight-bold h5">Email</label>
         <input type="email" class="form-control small-input" id="Email" th:field="*{email}" required>
+        <small id="email-error" class="text-danger"></small>
     </div>
+
     <div class="mb-3">
         <label for="password" class="form-label font-weight-bold h5">Password</label>
         <input type="password" class="form-control small-input" id="password" th:field="*{password}" required>
@@ -297,6 +306,101 @@
 
         }
     });
+
+ document.addEventListener("DOMContentLoaded", function () {
+        var usernameInput = document.getElementById("UserName");
+        var usernameError = document.getElementById("username-error");
+
+        // Event listener for username input
+        usernameInput.addEventListener("input", function () {
+            var enteredUsername = usernameInput.value.trim();
+
+            // Make an AJAX request to check if the entered username exists
+            checkUsernameAvailability(enteredUsername);
+        });
+
+        // Function to check username availability using AJAX
+        function checkUsernameAvailability(username) {
+            // AJAX request to the server endpoint to check username availability
+            // Replace '/user/check-username' with your actual server endpoint for checking username
+            fetch('/user/check-username?username=' + username)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.exists) {
+                        // Display error message if the username already exists
+                        usernameError.textContent = "Username is already in use";
+                    } else {
+                        // Clear error message if the username is available
+                        usernameError.textContent = "";
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    // Handle errors if any during the request
+                });
+        }
+    });
+ function validatePhoneNumber() {
+    var phoneNumber = document.getElementById("PhoneNumber").value;
+    var phoneError = document.getElementById("phone-error");
+
+    fetch('/user/check-phone?phone=' + phoneNumber)
+        .then(response => response.json())
+        .then(data => {
+            if (data.exists) {
+                phoneError.textContent = "Phone number is already in use";
+            } else {
+                phoneError.textContent = "";
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            // Handle errors if any during the request
+        });
+}
+document.addEventListener("DOMContentLoaded", function () {
+    var emailInput = document.getElementById("Email");
+    var emailError = document.getElementById("email-error");
+
+    // Event listener for email input
+    emailInput.addEventListener("input", function () {
+        var enteredEmail = emailInput.value.trim();
+
+        // Validate email format
+        if (!isValidEmail(enteredEmail)) {
+            emailError.textContent = "Please enter a valid email address";
+        } else {
+            emailError.textContent = ""; // Clear previous error message
+            // Check email availability using AJAX
+            checkEmailAvailability(enteredEmail);
+        }
+    });
+
+    // Function to validate email format
+    function isValidEmail(email) {
+        var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailPattern.test(email);
+    }
+
+    // Function to check email availability using AJAX
+    function checkEmailAvailability(email) {
+        fetch('/user/check-email?email=' + email)
+            .then(response => response.json())
+            .then(data => {
+                if (data.exists) {
+                    emailError.textContent = "Email is already in use";
+                } else {
+                    emailError.textContent = "";
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                // Handle errors during the request
+            });
+    }
+});
+
+
 </script>
 
 </body>

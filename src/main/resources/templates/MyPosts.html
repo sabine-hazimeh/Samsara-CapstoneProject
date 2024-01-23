@@ -13,6 +13,7 @@
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
     <link rel="stylesheet" th:href="@{/css/custom.min.css}" />
     <link rel="stylesheet" th:href="@{/fonts/FontAwesome.otf}" />
+    <link  rel="stylesheet" th:href="@{/fonts/iconfont.min.css}">
     <style>
         /* Style for delete and update buttons */
         .delete-btn, .update-btn {
@@ -26,6 +27,11 @@
             font-size: 14px;
             transition: background-color 0.3s, color 0.3s;
         }
+        .container2 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
 
         .delete-btn:hover, .update-btn:hover {
             background-color: #e8bc52;
@@ -41,13 +47,19 @@
     top: 10px;
     right: 10px;
 }
+.empty-icon {
+
+    margin-bottom: 10px;
+}
 
 /* CSS for disabled appearance */
 .property-item.sold-out {
     opacity: 0.6; /* Reduce opacity for the disabled appearance */
     pointer-events: none; /* Disable pointer events */
 }
-
+.delete button i {
+                font-size: 24px;
+            }
     </style>
 </head>
 <body>
@@ -68,11 +80,7 @@
                 <a th:href="@{/Post/view-post-Detail/{ID}(ID=${post.id})}">
                     <div class="property-inner">
                         <div class="image">
-                            <div th:each="image : ${post.images}">
-                                <td>
-                                    <img alt="" th:src="'data:image/jpeg;base64,' + ${image.image}">
-                                </td>
-                            </div>
+                            <img alt="" th:src="'data:image/jpeg;base64,' + ${post.images[0].image}">
 
                             <ul class="property-feature">
                                 <li>
@@ -91,7 +99,24 @@
                         </div>
                         <div class="content">
                             <div class="left">
-                                <span class="location" th:text="${post.location}"></span>
+                               <span class="location">
+                            <img src="http://drive.google.com/uc?export=view&id=1HGbxyuvjC1-SSh4Nrbpvx7v_AOb5QhmN" alt="" th:text="${post.location}">
+                        </span>
+                                <div class="row">
+                                    <div class="delete p-3" style="display: flex;">
+                                        <form th:action="@{/post/delete-post/{id}(id=${post.id})}" onsubmit="return confirm('Are you sure you want to remove this post from your wishlist?');" style="margin-right: 10px;">
+                                            <button type="submit" style="border: none; background: transparent;" title="Remove">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </form>
+                                        <form th:action="@{/post/update-post/{id}(id=${post.id})}">
+                                            <button type="submit" style="border: none; background: transparent;">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+
                             </div>
                             <div class="right">
                                 <div class="type-wrap">
@@ -101,10 +126,18 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="buttons">
-                            <a th:href="@{/post/delete-post/{id}(id=${post.id})}" class="btn delete-btn mt-3">Delete</a>
-                            <a th:href="@{/post/update-post/{id}(id=${post.id})}" class="btn update-btn mt-3">Update</a>
-                        </div>
+<!--                        <div class="buttons">-->
+<!--                            <a th:href="@{/post/delete-post/{id}(id=${post.id})}" class="btn delete-btn mt-3">Delete</a>-->
+<!--                            <a th:href="@{/post/update-post/{id}(id=${post.id})}" class="btn update-btn mt-3">Update</a>-->
+<!--                        </div>-->
+<!--                        <div class="p-3">-->
+<!--                            <a th:href="@{/post/delete-post/{id}(id=${post.id})}" class="icons">-->
+<!--                                <i class="fas fa-trash"></i>-->
+<!--                            </a>-->
+<!--                            <a th:href="@{/post/update-post/{id}(id=${post.id})}" class="icons">-->
+<!--                                <i class="fas fa-edit"></i>-->
+<!--                            </a>-->
+<!--                        </div>-->
                     </div>
                 </a>
             </div>
@@ -112,9 +145,17 @@
     </div>
 </div>
 
-<div th:if="${#lists.isEmpty(posts)}">
-    <p>No posts found for this user.</p>
+<div th:if="${#lists.isEmpty(posts)}" class="container2" style="color:#6c757d;">
+    <div class="empty-icon">
+        <!-- SVG for an empty circle with a line -->
+        <svg xmlns="http://www.w3.org/2000/svg" width="150" height="150" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10" stroke="#6c757d" stroke-width="2" fill="none" />
+            <line x1="4" y1="12" x2="20" y2="12" stroke="#6c757d" stroke-width="2" />
+        </svg>
+    </div>
+    <p style="font-weight:bold;">No posts found for this user.</p>
 </div>
+
 
 <div th:if="${errorMessage}">
     <p th:text="${errorMessage}"></p>

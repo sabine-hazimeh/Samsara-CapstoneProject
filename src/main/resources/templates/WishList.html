@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Wishlist</title>
+    <meta charset="UTF-8">
+    <title>Search Results</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Add FontAwesome CSS for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
     <link rel="stylesheet"  th:href="@{/css/style.css}" />
     <link rel="stylesheet"  th:href="@{/css/site.css}" />
@@ -13,60 +12,62 @@
     <link rel="stylesheet" th:href="@{/css/app.min.css}" />
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
     <link rel="stylesheet" th:href="@{/css/custom.min.css}" />
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <link rel="stylesheet" th:href="@{/fonts/FontAwesome.otf}" />
+    <link  rel="stylesheet" th:href="@{/fonts/iconfont.min.css}">
     <style>
         .sold-out-label {
-    background-color: #405189;
-    color: white;
-    padding: 4px 8px;
-    border-radius: 4px;
-    font-weight: bold;
-    position: absolute;
-    top: 10px;
-    right: 10px;
+background-color: #405189;
+color: white;
+padding: 4px 8px;
+border-radius: 4px;
+font-weight: bold;
+position: absolute;
+top: 10px;
+right: 10px;
 }
 
 
-        /* Enable trash button within sold-out posts */
-        .property-item.sold-out .delete.disabled-trash {
-            pointer-events: auto; /* Enable pointer events for the trash button */
-        }
+    /* Enable trash button within sold-out posts */
+    .property-item.sold-out .delete.disabled-trash {
+        pointer-events: auto; /* Enable pointer events for the trash button */
+    }
 /* CSS for disabled appearance */
 .property-item.sold-out {
-    opacity: 0.6; /* Reduce opacity for the disabled appearance */
-    pointer-events: none; /* Disable pointer events */
+opacity: 0.6; /* Reduce opacity for the disabled appearance */
+pointer-events: none; /* Disable pointer events */
 }
 
-        .delete button i {
-                font-size: 24px;
-            }
-            a.btn.pastel-button:hover {
-                background-color: #e8bc52;
-                color: #405189;
-                border-color: #e8bc52;
-            }
-        .bt{
-    width: auto;
-    background-color: rgb(0, 67, 149);
-    color: rgb(249, 195, 34);
-    text-transform: uppercase;
-    font-size: 16px;
-    font-weight: 600;
-    line-height: 30px;
-    border-width: initial;
-    border-style: none;
-    border-color: initial;
-    border-radius: 0;
-    border-image: initial;
-    padding: 10px 40px;
-    margin-bottom: 30px;
-    }
-        .bt:hover {
-    background-color: rgb(249, 195, 34);
-    color: rgb(0, 67, 149);
+    .delete button i {
+            font-size: 24px;
+        }
+        a.btn.pastel-button:hover {
+            background-color: #e8bc52;
+            color: #405189;
+            border-color: #e8bc52;
+        }
+    .bt{
+width: auto;
+background-color: rgb(0, 67, 149);
+color: rgb(249, 195, 34);
+text-transform: uppercase;
+font-size: 16px;
+font-weight: 600;
+line-height: 30px;
+border-width: initial;
+border-style: none;
+border-color: initial;
+border-radius: 0;
+border-image: initial;
+padding: 10px 40px;
+margin-bottom: 30px;
 }
-
+    .bt:hover {
+background-color: rgb(249, 195, 34);
+color: rgb(0, 67, 149);
+}
+   .container2 {
+text-align: center;
+margin-bottom: 30px;
+}
     </style>
 </head>
 <body>
@@ -89,94 +90,70 @@
         </div>
     </div>
 </div>
-<!--<div class="container">-->
-<!--    <table class="table table-striped">-->
-<!--        <thead class="pastel-bg">-->
-<!--        <tr class="pastel-text">-->
-<!--            <th>Image</th>-->
-<!--            <th>Location</th>-->
-<!--            <th>Price</th>-->
-<!--            <th>Action</th>-->
-<!--        </tr>-->
-<!--        </thead>-->
-<!--        <tbody>-->
-<!--        <tr th:each="post : ${wishList.PostsList}">-->
-<!--            <td>-->
-<!--                <a th:href="@{/post/view-post-Detail/{ID}(ID=${post.id})}">-->
-<!--                <div th:each="image : ${post.images}">-->
-<!--                        <img alt="" th:src="'data:image/jpeg;base64,' + ${image.image}" style="height:150px; width:150px;">-->
+<div class="container mt-3">
+    <div th:if="${not #lists.isEmpty(wishList.PostsList)}">
+        <div class="row">
+            <div th:each="post : ${wishList.PostsList}" class="property-item mb-40 col-4" th:classappend="${!post.available} ? 'sold-out' : ''">
+                <a th:href="@{/Post/view-post-Detail/{ID}(ID=${post.id})}">
+                    <div class="property-inner ">
+                        <div class="image">
+                            <img alt="" th:src="'data:image/jpeg;base64,' + ${post.images[0].image}">
 
-<!--                </div>-->
-<!--                </a>-->
-<!--            </td>-->
-<!--            <td th:text="${post.location}"></td>-->
-<!--            <td th:text="${post.price}"></td>-->
-<!--            <td>-->
-<!--                <div class="remove-button">-->
-<!--                    <a th:href="@{/wish/delete-WishItem/{id}(id=${post.id})}" class="btn pastel-button remove-btn font-weight-bold" style="background-color: #405189; color: #e8bc52; border-color: #405189;">Remove</a>-->
-<!--                </div>-->
-<!--            </td>-->
-
-<!--        </tr>-->
-<!--        </tbody>-->
-<!--    </table>-->
-<!--</div>-->
-
-<div class="row p-5">
-    <!-- Iterate over the list of Apartments -->
-    <div th:each="post : ${wishList.PostsList}" class="property-item mb-40 col-4"  th:classappend="${!post.available} ? 'sold-out' : ''">
-        <a th:href="@{/Post/view-post-Detail/{ID}(ID=${post.id})}">
-            <div class="property-inner ">
-                <div class="image">
-                    <div th:each="image : ${post.images}">
-                        <td>
-                            <img alt="" th:src="'data:image/jpeg;base64,' + ${image.image}">
-                        </td>
-                    </div>
-
-
-                    <ul class="property-feature">
-                        <li>
+                            <ul class="property-feature">
+                                <li>
                                         <span class="area">
                                             <img src="http://drive.google.com/uc?export=view&id=12pl1CMox-BSLAmQ43G_9-eTuiE0oJOH6" alt="" th:text="${post.area}"></span>
-                        </li>
-                        <li>
+                                </li>
+                                <li>
                                         <span class="bed">
                                             <img src="http://drive.google.com/uc?export=view&id=1lWwcNolnIGzhKA44SFGJx57lYDzI7TE8" alt="" th:text="${post.bedroomNb}"></span>
-                        </li>
-                        <li>
+                                </li>
+                                <li>
                                         <span class="bath">
                                             <img src="http://drive.google.com/uc?export=view&id=1_6GbQnj30rmjc8OwXe7bgb5dh8I4sUE1" alt="" th:text="${post.bathroomNb}"></span>
-                        </li>
-                    </ul>
-                </div>
-                <div class="content">
-                    <div class="left">
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="content">
+                            <div class="left">
                                     <span class="location">
                                         <img src="http://drive.google.com/uc?export=view&id=1HGbxyuvjC1-SSh4Nrbpvx7v_AOb5QhmN" alt="" th:text="${post.location}"></span>
-                        <div class="delete p-3" th:classappend="${!post.available} ? 'disabled-trash' : ''">
-                            <form th:action="@{/wish/delete-WishItem/{id}(id=${post.id})}" onsubmit="return confirm('Are you sure you want to remove this post from your wishlist?');">
-                                <button type="submit" style="border: none; background: transparent;" title="Remove">
-                                    <i class="fas fa-trash"></i>
-                                </button>
-                            </form>
+                                <div class="delete p-3" th:classappend="${!post.available} ? 'disabled-trash' : ''">
+                                    <form th:action="@{/wish/delete-WishItem/{id}(id=${post.id})}" onsubmit="return confirm('Are you sure you want to remove this post from your wishlist?');">
+                                        <button type="submit" style="border: none; background: transparent;" title="Remove">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="right">
+                                <div class="type-wrap">
+                                        <span class="price" th:text="${post.price}">
+                                            <p>$</p>
+                                        </span>
+                                    <span class="type" th:text="${post.status}"></span>
+                                    <span th:if="${!post.available}" class="sold-out-label">Sold Out</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="right">
-                        <div class="type-wrap">
-                            <span class="price" th:text="${post.price} + '$'"></span>
-                            <span class="type" th:text="${post.status}"></span>
-                            <span th:if="${!post.available}" class="sold-out-label">Sold Out</span>
-                        </div>
-                    </div>
-
-                </div>
+                </a>
             </div>
-        </a>
+        </div>
+
+    </div>
+    <div th:if="${#lists.isEmpty(wishList.PostsList)}" class="container2">
+        <div class="empty-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="150" height="150" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="10" stroke="#6c757d" stroke-width="2" fill="none" />
+                <line x1="4" y1="12" x2="20" y2="12" stroke="#6c757d" stroke-width="2" />
+            </svg>
+        </div>
+        <p style="font-weight:bold;">No posts available in the wishlist</p>
     </div>
 </div>
 
-</div>
 <div th:replace="fragment/footer :: footer"></div>
+
 </body>
 </html>

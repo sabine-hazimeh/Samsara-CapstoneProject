@@ -23,12 +23,10 @@ public class HomePageController {
     public String getHomePage(Model model)  {
         long clientCount = clientRepository.count();
         model.addAttribute("clientCount", clientCount);
-
         long countOfAvailablePosts = postRepository.countByAvailableTrue();
         model.addAttribute("availablePostCount", countOfAvailablePosts);
         long countOfUnavailablePosts = postRepository.countByAvailableFalse();
         model.addAttribute("unavailablePostCount", countOfUnavailablePosts);
         return "HomePage";
     }
-
 }

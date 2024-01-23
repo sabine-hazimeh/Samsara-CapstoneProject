@@ -13,6 +13,7 @@
     <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
     <link rel="stylesheet" th:href="@{/css/custom.min.css}" />
     <link rel="stylesheet" th:href="@{/fonts/FontAwesome.otf}" />
+    <link  rel="stylesheet" th:href="@{/fonts/iconfont.min.css}">
 <style>
     .bt{
     width: auto;
@@ -135,19 +136,19 @@
             </select>
         </div>
 
-        <!-- Longitude -->
         <div class="mb-3">
             <label for="longitude" class="form-label">Longitude</label>
-            <input type="number" class="form-control" id="longitude" th:field="*{longitude}">
+            <input type="text" class="form-control" id="longitude" th:field="*{longitude}">
         </div>
 
         <!-- Altitude -->
         <div class="mb-3">
             <label for="altitude" class="form-label">Altitude</label>
-            <input type="number" class="form-control" id="altitude" th:field="*{altitude}">
+            <input type="text" class="form-control" id="altitude" th:field="*{altitude}">
         </div>
 
-                <div class="mb-3">
+
+        <div class="mb-3">
                     <label for="available" class="form-label">Available</label>
                     <select class="form-control" id="available" th:field="*{available}">
                         <option value="true" th:text="True" th:selected="${Post.available}"></option>

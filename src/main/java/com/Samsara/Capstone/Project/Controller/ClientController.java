@@ -40,14 +40,17 @@ public class ClientController {
     public String createUser(@ModelAttribute Client client, Model model, @RequestParam("files") MultipartFile files) throws IOException {
         if (clientService.userNameExists(client.getUserName())) {
             model.addAttribute("errorMessage", "Username is already in use");
+            model.addAttribute("Client", client);
             return "Register";
         }
         if (clientService.userEmailExists(client.getEmail())) {
             model.addAttribute("errorMessage", "Email is already in use");
+            model.addAttribute("Client", client);
             return "Register";
         }
         if (clientService.userPhoneNumberExists(client.getPhoneNumber())) {
             model.addAttribute("errorMessage", "Phone number is already in use");
+            model.addAttribute("Client", client);
             return "Register";
         }
         clientService.createClient(client, files);

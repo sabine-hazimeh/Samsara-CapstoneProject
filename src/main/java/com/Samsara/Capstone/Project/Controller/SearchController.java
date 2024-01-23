@@ -31,15 +31,19 @@ public String searchPosts(
     List<Post> searchResults;
 
     if (location != null && bedroomNb != null && bathroomNb != null) {
-        searchResults = postRepository.findByLocationAndBedroomNbAndBathroomNbAndDeleted(location, bedroomNb, bathroomNb,false);
+        searchResults = postRepository.findByPartialLocationAndBedroomNbAndBathroomNbAndDeleted(location, bedroomNb, bathroomNb,false);
+
     } else if (location != null && bedroomNb != null) {
-        searchResults = postRepository.findByLocationAndBedroomNbAndDeleted(location, bedroomNb, false);
+        searchResults = postRepository.findByPartialLocationAndBedroomNbAndDeleted(location, bedroomNb, false);
+
+
     } else if (location != null && bathroomNb != null) {
-        searchResults = postRepository.findByLocationAndBathroomNbAndDeleted(location, bathroomNb,false);
+        searchResults = postRepository.findByPartialLocationAndBathroomNbAndDeleted(location, bathroomNb,false);
+
     } else if (bedroomNb != null && bathroomNb != null) {
         searchResults = postRepository.findByBedroomNbAndBathroomNbAndDeleted(bedroomNb, bathroomNb,false);
     } else if (location != null) {
-        searchResults = postRepository.findByLocationAndDeleted(location,false);
+        searchResults = postRepository.findByPartialLocationAndDeleted(location,false);
     } else if (bedroomNb != null) {
         searchResults = postRepository.findByBedroomNbAndDeleted(bedroomNb,false);
     } else if (bathroomNb != null) {
@@ -48,7 +52,7 @@ public String searchPosts(
         searchResults = new ArrayList<>();
     }
 
-    model.addAttribute("post", searchResults);
+    model.addAttribute("Post", searchResults);
     return "SearchPage";
 }
 

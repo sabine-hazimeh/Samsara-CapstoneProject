@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Apartment Price Prediction</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel="stylesheet"  th:href="@{/css/style.css}" />
+    <link rel="stylesheet"  th:href="@{/css/site.css}" />
+    <link rel="stylesheet" th:href="@{/css/helper.css}" />
+    <link rel="stylesheet" th:href="@{/css/plugins.css}" />
+    <link rel="stylesheet" th:href="@{/css/app.min.css}" />
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+    <link rel="stylesheet" th:href="@{/css/custom.min.css}" />
+    <link rel="stylesheet" th:href="@{/fonts/FontAwesome.otf}" />
+    <link rel="stylesheet" th:href="@{/css/icons.min.css}" />
+    <link  rel="stylesheet" th:href="@{/fonts/iconfont.min.css}">
+    <style>
+    .bt{
+    width: auto;
+    background-color: rgb(0, 67, 149);
+    color: rgb(249, 195, 34);
+    text-transform: uppercase;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 30px;
+    border-width: initial;
+    border-style: none;
+    border-color: initial;
+    border-radius: 0;
+    border-image: initial;
+    padding: 10px 40px;
+    margin-bottom: 30px;
+    }
+    .bt:hover {
+    background-color: rgb(249, 195, 34);
+    color: rgb(0, 67, 149);
+    }
+    </style>
+</head>
+<body>
+<div th:replace="fragment/header :: header"></div>
+<div class="container mt-5">
+    <form action="/predict/predictApartmentPrice" method="post">
+        <input type="hidden" name="price" value="0">
+        <!-- Area Input -->
+        <div class="form-group">
+            <label for="area">Area:</label>
+            <input type="text" class="form-control" id="area" name="area" required>
+        </div>
+
+        <!-- Bedroom Input -->
+        <div class="form-group">
+            <label for="bedroom">Bedroom:</label>
+            <input type="text" class="form-control" id="bedroom" name="bedroom" required>
+        </div>
+
+        <!-- Bathroom Input -->
+        <div class="form-group">
+            <label for="bathroom">Bathroom:</label>
+            <input type="text" class="form-control" id="bathroom" name="bathroom" required>
+        </div>
+
+        <!-- Stories Input -->
+        <div class="form-group">
+            <label for="stories">Stories:</label>
+            <input type="text" class="form-control" id="stories" name="stories" required>
+        </div>
+
+        <!-- Parking Input -->
+        <div class="form-group">
+            <label for="parking">Parking:</label>
+            <select class="form-control" id="parking" name="parking" required>
+                <option value="1">Yes</option>
+                <option value="0">No</option>
+            </select>
+        </div>
+
+        <!-- Other boolean fields -->
+        <!-- Use similar select elements for ,  airconditioning, prefarea -->
+        <div class="form-group">
+            <label for="mainroad">Mainroad:</label>
+            <select class="form-control" id="mainroad" name="mainroad" required>
+                <option value="1">Yes</option>
+                <option value="0">No</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="guestroom">Guestroom:</label>
+            <select class="form-control" id="guestroom" name="guestroom" required>
+                <option value="1">Yes</option>
+                <option value="0">No</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="basement">Basement:</label>
+            <select class="form-control" id="basement" name="basement" required>
+                <option value="1">Yes</option>
+                <option value="0">No</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="hotwaterheating"> hot water heating:</label>
+            <select class="form-control" id="hotwaterheating" name="hotwaterheating" required>
+                <option value="1">Yes</option>
+                <option value="0">No</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="prefarea">Pref area:</label>
+            <select class="form-control" id="prefarea" name="prefarea" required>
+                <option value="1">Yes</option>
+                <option value="0">No</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="airconditioning">Air conditioning:</label>
+            <select class="form-control" id="airconditioning" name="airconditioning" required>
+                <option value="1">Yes</option>
+                <option value="0">No</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="furnishingstatus">Furnishing Status:</label>
+            <select class="form-control" id="furnishingstatus" name="furnishingstatus" required>
+                <option value="furnished">Furnished</option>
+                <option value="semi-furnished">Semi-furnished</option>
+                <option value="unfurnished">Unfurnished</option>
+            </select>
+        </div>
+
+        <!-- Hidden fields to store the binary values -->
+        <input type="hidden" id="furnishedValue" name="furnishedValue" value="0">
+        <input type="hidden" id="semiFurnishedValue" name="semiFurnishedValue" value="0">
+        <input type="hidden" id="unfurnishedValue" name="unfurnishedValue" value="0">
+
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn bt">Submit</button>
+    </form>
+</div>
+<div th:replace="fragment/footer :: footer"></div>
+</body>
+</html>

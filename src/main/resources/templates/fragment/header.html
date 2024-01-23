@@ -1,8 +1,13 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta charset="UTF-8">
 </head>
+<style>
+    .plus-icon {
+           margin-left: 5px; /* Adjust the margin as needed */
+       }
+</style>
 <body>
 <!--Header section start-->
 <header class="header header-stick">
@@ -42,11 +47,13 @@
                                     <span class="title">WishList</span>
                                 </a>
                             </li>
-                            <li>
+
+                            <li sec:authorize="hasAuthority('client')">
                                 <a th:href="@{/client/display-details}" class="nav-link">
                                     <span class="title">My Profile</span>
                                 </a>
                             </li>
+
                         </ul>
                     </nav>
                 </div>
@@ -54,25 +61,35 @@
 
                 <!--User start-->
                 <div class="col mr-sm-50 mr-xs-50">
-                <div sec:authorize="isAuthenticated()" class="d-inline">
-                    <form class="siteLink" id="logoutForm" th:action="@{/logout}" method="post">
-                        <div class="d-flex align-items-center justify-content-end">
-                            <div class="d-flex flex-column align-items-center">
-                                <span class="text-dark fw-bold">Logged in as:</span>
-                                <span class="text-dark mt-1" th:text="${#authentication.principal.username}"></span>
+                    <div sec:authorize="isAuthenticated()" class="d-inline">
+                        <form class="siteLink" id="logoutForm" th:action="@{/logout}" method="post">
+                            <div class="d-flex align-items-center justify-content-end">
+                                <!-- Logged in user information -->
+                                <div class="d-flex flex-column align-items-center">
+                                    <span class="text-dark fw-bold">Logged in as:</span>
+                                    <span class="text-dark mt-1" th:text="${#authentication.principal.username}"></span>
+                                </div>
+                                <!-- Logout icon -->
+                                <div class="blackLink">
+                                    <a href="/logout">
+                                        <i id="loggedOutIcon" style="color: black;" class="fas fa-sign-out-alt fa-2x pastel-text ml-3"></i>
+                                    </a>
+                                </div>
+                                <!-- Plus icon for logged-in users -->
+                                <div class="blackLink" style="display: flex; align-items: center;">
+                                    <a th:href="@{/post/add-post}">
+                                    <i class="fas fa-plus-circle fa-2x pastel-text ml-3" style="color:black;"></i>
+                                    </a>
+                                </div>
                             </div>
-                            <div class="blackLink" >
-                                <a href="/logout">
-                                <i id="loggedOutIcon" style="color:black;" class="fas fa-sign-out-alt fa-2x pastel-text ml-3"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div sec:authorize="isAnonymous()" class="d-inline">
-                    <a th:href="@{/logIn/display-logIn}" style="color: black"><span>Login or Register</span></a>
-                </div>
+                        </form>
                     </div>
+                    <div sec:authorize="isAnonymous()" class="d-inline">
+                        <!-- Login or Register link -->
+                        <a th:href="@{/logIn/display-logIn}" style="color: black"><span>Login or Register</span></a>
+
+                    </div>
+                </div>
                 <!--User end-->
             </div>
 

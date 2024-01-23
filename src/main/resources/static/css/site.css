@@ -2012,12 +2012,12 @@ header.header.is-sticky {
   height: auto;
 }
 .property-search form > div .nice-select {
-  width: 100%;
+  width: 78%;
   border: 1px solid #eeeeee;
   background-color: transparent;
   padding: 0;
   border-radius: 0;
-  height: auto;
+  height: 40px;
 }
 .property-search form > div .nice-select::after {
   height: 7px;
@@ -4675,6 +4675,7 @@ header.header.is-sticky {
 }
 .footer-widget ul li a {
   display: block;
+  color:white;
 }
 .footer-widget ul li a:hover {
   color: #f9c322;

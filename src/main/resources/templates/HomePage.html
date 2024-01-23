@@ -37,7 +37,7 @@
                                 <div class="hero-property-content text-center">
 
                                     <h1 class="title">
-                                        sky villa
+                                        <a th:href="@{'/Post/view-post-Detail/5'}">Sky villa</a>
                                     </h1>
                                     <span class="location">
                                             <img th:src="@{http://drive.google.com/uc?export=view&id=1QEpnEcRjxbpGBK7PY2t2jYXqD82mq10g}" alt="" />
@@ -61,10 +61,10 @@
                                             <img th:src="@{http://drive.google.com/uc?export=view&id=1KceE76KbQIlz4BbEu7QRmKrXqk_DnrIv}" alt=""/>
                                             <span>4 Bath</span>
                                         </li>
-                                        <li>
-                                            <img th:src="@{http://drive.google.com/uc?export=view&id=1YolcuLW2TR6kRi87mhv2cJBs5YsYFt5E}" alt=""/>
-                                            <span>2 Garage</span>
-                                        </li>
+<!--                                        <li>-->
+<!--                                            <img th:src="@{http://drive.google.com/uc?export=view&id=1YolcuLW2TR6kRi87mhv2cJBs5YsYFt5E}" alt=""/>-->
+<!--                                            <span>2 Garage</span>-->
+<!--                                        </li>-->
                                     </ul>
                                 </div>
                             </div>
@@ -78,7 +78,9 @@
 
                                 <div class="hero-property-content text-center">
                                     <h1 class="title">
+                                        <a th:href="@{'/Post/view-post-Detail/6'}">
                                         Dream Villa
+                                        </a>
                                     </h1>
                                     <span class="location">
                         <img th:src="@{http://drive.google.com/uc?export=view&id=1QEpnEcRjxbpGBK7PY2t2jYXqD82mq10g}" alt=""/>
@@ -102,10 +104,10 @@
                                             <img th:src="@{http://drive.google.com/uc?export=view&id=1KceE76KbQIlz4BbEu7QRmKrXqk_DnrIv}" alt=""/>
                                             <span>4 Bath</span>
                                         </li>
-                                        <li>
-                                            <img th:src="@{http://drive.google.com/uc?export=view&id=1YolcuLW2TR6kRi87mhv2cJBs5YsYFt5E}" alt=""/>
-                                            <span>3 Garage</span>
-                                        </li>
+<!--                                        <li>-->
+<!--                                            <img th:src="@{http://drive.google.com/uc?export=view&id=1YolcuLW2TR6kRi87mhv2cJBs5YsYFt5E}" alt=""/>-->
+<!--                                            <span>3 Garage</span>-->
+<!--                                        </li>-->
                                     </ul>
 
                                 </div>
@@ -166,7 +168,7 @@
             <div class="container">
 
                 <div class="row">
-                    <div class="single-fact col-lg-3 col-6 mb-30">
+                    <div class="single-fact col-lg-4 col-6 mb-30">
                         <div class="inner">
                             <div class="head">
                                 <i class="pe-7s-home"></i>
@@ -175,18 +177,16 @@
                             <p>Properties Available</p>
                         </div>
                     </div>
-
-                    <div class="single-fact col-lg-3 col-6 mb-30">
+                    <div class="single-fact col-lg-4 col-6 mb-30">
                         <div class="inner">
                             <div class="head">
                                 <i class="pe-7s-graph3"></i>
-                                <h3 class="counter" th:text="${unavailablePostCount}">0</h3>
+                                <h3 class="counter" th:text="${unavailablePostCount}"></h3>
                             </div>
                             <p>Property Sold</p>
                         </div>
                     </div>
-
-                    <div class="single-fact col-lg-3 col-6 mb-30">
+                    <div class="single-fact col-lg-4 col-6 mb-30">
                         <div class="inner">
                             <div class="head">
                                 <i class="pe-7s-users"></i>
@@ -196,15 +196,6 @@
                         </div>
                     </div>
 
-                    <div class="single-fact col-lg-3 col-6 mb-30">
-                        <div class="inner">
-                            <div class="head">
-                                <i class="pe-7s-medal"></i>
-                                <h3 class="counter">80</h3>
-                            </div>
-                            <p>Awards Win</p>
-                        </div>
-                    </div>
 
                 </div>
 
@@ -267,7 +258,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
 <script>
     $(document).ready(function(){
-    // Initialize Slick slider
     $('.hero-slider').slick({
         slidesToShow: 1,
         slidesToScroll: 1,
