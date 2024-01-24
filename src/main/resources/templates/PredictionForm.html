@@ -36,43 +36,53 @@
     background-color: rgb(249, 195, 34);
     color: rgb(0, 67, 149);
     }
+
+    /* Custom CSS for styling */
+    .custom-style {
+      font-size: 20px; /* Set the font size as per your requirement */
+      font-weight: bold;
+      border: 2px solid #007bff; /* Set border properties */
+      padding: 10px; /* Add padding for better appearance */
+      text-align: center; /* Center the text */
+
+    </style>
     </style>
 </head>
 <body>
 <div th:replace="fragment/header :: header"></div>
 <div class="container mt-5">
-    <form action="/predict/predictApartmentPrice" method="post">
-        <input type="hidden" name="price" value="0">
+    <form action="/predict/predictApartmentPrice" th:object="${predict}" method="post">
+
         <!-- Area Input -->
         <div class="form-group">
             <label for="area">Area:</label>
-            <input type="text" class="form-control" id="area" name="area" required>
+            <input type="number" class="form-control" id="area" name="area" th:field="*{area}" required>
         </div>
 
         <!-- Bedroom Input -->
         <div class="form-group">
             <label for="bedroom">Bedroom:</label>
-            <input type="text" class="form-control" id="bedroom" name="bedroom" required>
+            <input type="number" class="form-control" id="bedroom" name="bedroom"  th:field="*{bedroom}" required>
         </div>
 
         <!-- Bathroom Input -->
         <div class="form-group">
             <label for="bathroom">Bathroom:</label>
-            <input type="text" class="form-control" id="bathroom" name="bathroom" required>
+            <input type="number" class="form-control" id="bathroom" name="bathroom" th:field="*{bathroom}" required>
         </div>
 
         <!-- Stories Input -->
         <div class="form-group">
             <label for="stories">Stories:</label>
-            <input type="text" class="form-control" id="stories" name="stories" required>
+            <input type="number" class="form-control" id="stories" name="stories"  th:field="*{stories}" required>
         </div>
 
         <!-- Parking Input -->
         <div class="form-group">
             <label for="parking">Parking:</label>
-            <select class="form-control" id="parking" name="parking" required>
-                <option value="1">Yes</option>
-                <option value="0">No</option>
+            <select class="form-control" id="parking" name="parking"  th:field="*{parking}" required>
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
             </select>
         </div>
 
@@ -80,64 +90,62 @@
         <!-- Use similar select elements for ,  airconditioning, prefarea -->
         <div class="form-group">
             <label for="mainroad">Mainroad:</label>
-            <select class="form-control" id="mainroad" name="mainroad" required>
-                <option value="1">Yes</option>
-                <option value="0">No</option>
+            <select class="form-control" id="mainroad" name="mainroad"  th:field="*{mainroad}" required>
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
             </select>
         </div>
         <div class="form-group">
             <label for="guestroom">Guestroom:</label>
-            <select class="form-control" id="guestroom" name="guestroom" required>
-                <option value="1">Yes</option>
-                <option value="0">No</option>
+            <select class="form-control" id="guestroom" name="guestroom"  th:field="*{guestroom}" required>
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
             </select>
         </div>
         <div class="form-group">
             <label for="basement">Basement:</label>
-            <select class="form-control" id="basement" name="basement" required>
-                <option value="1">Yes</option>
-                <option value="0">No</option>
+            <select class="form-control" id="basement" name="basement"  th:field="*{basement}" required>
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
             </select>
         </div>
         <div class="form-group">
             <label for="hotwaterheating"> hot water heating:</label>
-            <select class="form-control" id="hotwaterheating" name="hotwaterheating" required>
-                <option value="1">Yes</option>
-                <option value="0">No</option>
+            <select class="form-control" id="hotwaterheating" name="hotwaterheating"  th:field="*{hotwaterheating}" required>
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
             </select>
         </div>
         <div class="form-group">
             <label for="prefarea">Pref area:</label>
-            <select class="form-control" id="prefarea" name="prefarea" required>
-                <option value="1">Yes</option>
-                <option value="0">No</option>
+            <select class="form-control" id="prefarea" name="prefarea"  th:field="*{prefarea}" required>
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
             </select>
         </div>
         <div class="form-group">
             <label for="airconditioning">Air conditioning:</label>
-            <select class="form-control" id="airconditioning" name="airconditioning" required>
-                <option value="1">Yes</option>
-                <option value="0">No</option>
+            <select class="form-control" id="airconditioning" name="airconditioning"  th:field="*{airconditioning}" required>
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
             </select>
         </div>
         <div class="form-group">
             <label for="furnishingstatus">Furnishing Status:</label>
-            <select class="form-control" id="furnishingstatus" name="furnishingstatus" required>
+            <select class="form-control" id="furnishingstatus" name="furnishingstatus"  th:field="*{furnishingstatus}" required>
                 <option value="furnished">Furnished</option>
                 <option value="semi-furnished">Semi-furnished</option>
                 <option value="unfurnished">Unfurnished</option>
             </select>
         </div>
 
-        <!-- Hidden fields to store the binary values -->
-        <input type="hidden" id="furnishedValue" name="furnishedValue" value="0">
-        <input type="hidden" id="semiFurnishedValue" name="semiFurnishedValue" value="0">
-        <input type="hidden" id="unfurnishedValue" name="unfurnishedValue" value="0">
-
 
         <!-- Submit Button -->
         <button type="submit" class="btn bt">Submit</button>
     </form>
+    <div class="form-group" th:if="${not #strings.isEmpty(predictedPrice)}" >
+        <p id="predictedPrice" th:text="${predictedPrice}+'$' " class="custom-style"></p>
+    </div>
 </div>
 <div th:replace="fragment/footer :: footer"></div>
 </body>

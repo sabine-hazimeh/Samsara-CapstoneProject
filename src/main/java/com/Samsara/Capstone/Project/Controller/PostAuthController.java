@@ -70,7 +70,8 @@ public class PostAuthController {
         return "CreatePost";
     }
     @GetMapping(value="/predict-price")
-    public String predictPostPrice(){
+    public String predictPostPrice(Model model){
+        model.addAttribute("predict", new PredictionInput());
         return "PredictionForm";
     }
 
